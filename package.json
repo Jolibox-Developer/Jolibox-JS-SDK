@@ -1,0 +1,20 @@
+{
+  "name": "@jolibox/jolibox-js-sdk",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "dev:test-vite": "pnpm --filter @jolibox/test run dev",
+    "build:ads": "pnpm --filter @jolibox/ads-sdk run build",
+    "build:test-vite": "pnpm --filter @jolibox/test run build:vite",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "tsup": "^8.3.0",
+    "tsx": "^4.19.1",
+    "typescript": "^5.6.2"
+  }
+}
