@@ -1,14 +1,14 @@
 declare global {
   interface Window {
     adsbygoogle: any;
-    __JOLIBOX_SDK__: {
+    __JOLIBOX__: {
       ads?: JoliboxAds;
     };
   }
 }
 
 if (typeof window !== "undefined") {
-  window.__JOLIBOX_SDK__ = window.__JOLIBOX_SDK__ || {};
+  window.__JOLIBOX__ = window.__JOLIBOX__ || {};
 }
 
 export interface IAdsInitParams {
@@ -38,18 +38,35 @@ export interface IPlacementInfo {
     | "viewed";
 }
 
-// TODO: split this into multiple interfaces in terms of ad types
-interface IAdBreakParams {
-  type: "preroll" | "start" | "pause" | "next" | "browse" | "reward";
+export type IAdBreakParams =
+  | IPrerollParams
+  | IInterstitialsParams
+  | IRewardParams;
+
+export interface IPrerollParams {
+  type: "preroll";
+  adBreakDone?: (placementInfo: IPlacementInfo) => void;
+}
+
+export interface IInterstitialsParams {
+  type: "start" | "pause" | "next" | "browse" | "reward";
+  name?: string;
+  beforeAd?: () => void;
+  afterAd?: () => void;
+  adBreakDone?: (placementInfo: IPlacementInfo) => void;
+}
+
+export interface IRewardParams {
+  type: "reward";
   name?: string;
   beforeAd?: () => void;
   afterAd?: () => void;
   adBreakDone?: (placementInfo: IPlacementInfo) => void;
 
   // only reward
-  beforeReward?: (showAdFn: () => void) => void;
-  adDismissed?: () => void;
-  adViewed?: () => void;
+  beforeReward: (showAdFn: () => void) => void;
+  adDismissed: () => void;
+  adViewed: () => void;
 }
 
 export class JoliboxAds {
@@ -67,12 +84,12 @@ export class JoliboxAds {
   };
 
   static getInstance = () => {
-    if (!window.__JOLIBOX_SDK__.ads) {
+    if (!window.__JOLIBOX__.ads) {
       throw new Error(
         "Ads SDK not initialized, contact jolibox developer support team"
       );
     }
-    return window.__JOLIBOX_SDK__.ads;
+    return window.__JOLIBOX__.ads;
   };
 
   static create = async (config: IAdsInitParams) => {
@@ -80,8 +97,8 @@ export class JoliboxAds {
       return;
     }
 
-    if (window.__JOLIBOX_SDK__.ads) {
-      return window.__JOLIBOX_SDK__.ads;
+    if (window.__JOLIBOX__.ads) {
+      return window.__JOLIBOX__.ads;
     } else {
       let clientId = "ca-pub-7171363994453626";
       let channelId: string | undefined;
@@ -114,7 +131,7 @@ export class JoliboxAds {
       window.adsbygoogle = window.adsbygoogle || [];
 
       const ads = new JoliboxAds(clientId, channelId ?? "");
-      window.__JOLIBOX_SDK__.ads = ads;
+      window.__JOLIBOX__.ads = ads;
       return ads;
     }
   };
