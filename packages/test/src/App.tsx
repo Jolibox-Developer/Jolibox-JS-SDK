@@ -1,17 +1,17 @@
 import JoliboxAds from "@jolibox/ads-sdk";
-import { useEffect, useState } from "react";
+import JoliboxInternal from "@jolibox/internal";
+import { useEffect, useMemo, useState } from "react";
 
 export const App = () => {
-  const [ready, setReady] = useState(false);
   const [ads, setAds] = useState<JoliboxAds>();
+  const ready = useMemo(() => !!ads, [ads]);
 
   useEffect(() => {
-    JoliboxAds.create({
-      gameId: "gameId",
-      testMode: true,
-    }).then((ads) => {
+    // JoliboxInternal is called in jolibox side
+    JoliboxInternal.init("gameId").then(() => {
+      // Content provider will call create to initialize an ads sdk
+      const ads = JoliboxAds.create({ testMode: true });
       setAds(ads);
-      setReady(true);
     });
   }, []);
 

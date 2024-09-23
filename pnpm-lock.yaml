@@ -20,11 +20,16 @@ importers:
 
   packages/ads: {}
 
+  packages/internal: {}
+
   packages/test:
     dependencies:
       '@jolibox/ads-sdk':
         specifier: workspace:*
         version: link:../ads
+      '@jolibox/internal':
+        specifier: workspace:*
+        version: link:../internal
       react:
         specifier: ^18.3.1
         version: 18.3.1

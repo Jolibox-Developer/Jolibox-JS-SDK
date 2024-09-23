@@ -14,6 +14,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@jolibox/internal": "workspace:*",
     "@jolibox/ads-sdk": "workspace:*",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"

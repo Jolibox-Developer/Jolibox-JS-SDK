@@ -2,6 +2,12 @@ declare global {
   interface Window {
     adsbygoogle: any;
     __JOLIBOX__: {
+      internal: {
+        googleAds: {
+          clientId?: string;
+          channelId?: string;
+        };
+      };
       ads?: JoliboxAds;
     };
   }
@@ -13,7 +19,6 @@ if (typeof window !== "undefined") {
 
 export interface IAdsInitParams {
   testMode?: boolean;
-  gameId: string;
 }
 
 export interface IAdConfigParams {
@@ -84,15 +89,10 @@ export class JoliboxAds {
   };
 
   static getInstance = () => {
-    if (!window.__JOLIBOX__.ads) {
-      throw new Error(
-        "Ads SDK not initialized, contact jolibox developer support team"
-      );
-    }
     return window.__JOLIBOX__.ads;
   };
 
-  static create = async (config: IAdsInitParams) => {
+  static create = (config: IAdsInitParams) => {
     if (typeof window === "undefined") {
       return;
     }
@@ -100,17 +100,14 @@ export class JoliboxAds {
     if (window.__JOLIBOX__.ads) {
       return window.__JOLIBOX__.ads;
     } else {
-      let clientId = "ca-pub-7171363994453626";
-      let channelId: string | undefined;
-      try {
-        // TODO: implement this
-        const clientInfoResp = await fetch(
-          `https://openapi.jolibox.com/api/v1/ads/client/${config.gameId}`
+      const clientId = window.__JOLIBOX__.internal.googleAds.clientId;
+      const channelId = window.__JOLIBOX__.internal.googleAds.channelId;
+
+      if (!clientId || !channelId) {
+        throw new Error(
+          "Ads SDK not initialized, contact jolibox developer support team"
         );
-        const clientInfo = await clientInfoResp.json();
-        clientId = clientInfo.data.clientId;
-        channelId = clientInfo.data.channelId;
-      } catch (e) {}
+      }
 
       const gAdsenseDomId = "google-adsense";
       const testMode = config.testMode || false;
