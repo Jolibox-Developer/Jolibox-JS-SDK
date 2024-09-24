@@ -10,7 +10,7 @@ export const App = () => {
     // JoliboxInternal is called in jolibox side
     JoliboxInternal.init("gameId").then(() => {
       // Content provider will call create to initialize an ads sdk
-      const ads = JoliboxAds.create({ testMode: true });
+      const ads = new JoliboxAds({ testMode: true });
       setAds(ads);
     });
   }, []);

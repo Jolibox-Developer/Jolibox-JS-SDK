@@ -29,10 +29,10 @@ Most functions are strictly follow Ad Placement API design. You can read Google'
 - Initialization
 
   ```typescript
-  const ads = JoliboxAds.create({ testMode: true });
+  const ads = new JoliboxAds({ testMode: true });
 
   // Somewhere when you need a popup ads for reward
-  ads?.adBreak({
+  ads.adBreak({
     type: "reward",
     beforeReward(showAdFn) {
       showAdFn();
