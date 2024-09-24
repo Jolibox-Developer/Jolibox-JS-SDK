@@ -4,6 +4,8 @@
   "description": "",
   "type": "module",
   "scripts": {
+    "typedoc": "typedoc",
+    "serve:doc": "pnpm typedoc && serve -s docs",
     "dev:test-vite": "pnpm --filter @jolibox/test run dev",
     "build:internal": "pnpm --filter @jolibox/internal run build",
     "build:ads": "pnpm --filter @jolibox/ads-sdk run build",
@@ -14,6 +16,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "serve": "^14.2.3",
     "tsup": "^8.3.0",
     "tsx": "^4.19.1",
     "typedoc": "^0.26.7",

@@ -1,0 +1,4 @@
+{
+    "projectDocuments": ["packages/ads/README.md"],
+    "entryPoints": ["packages/ads/src/index.ts"]
+}

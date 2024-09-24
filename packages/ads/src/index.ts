@@ -8,7 +8,6 @@ declare global {
           channelId?: string;
         };
       };
-      ads?: JoliboxAds;
     };
   }
 }
@@ -225,74 +224,62 @@ export class JoliboxAds {
   public clientId: string;
   public channelId: string;
 
-  constructor(clientId: string, channelId: string) {
+  /**
+   * Create a new instance of JoliboxAds. The constructor will automatically load the Google Adsense script.
+   * @param config
+   * @returns
+   */
+  constructor(config: IAdsInitParams) {
+    if (typeof window === "undefined") {
+      this.clientId = "";
+      this.channelId = "";
+      return;
+    }
+
+    const clientId = window.__JOLIBOX__.internal.googleAds.clientId;
+    const channelId = window.__JOLIBOX__.internal.googleAds.channelId;
+
+    if (!clientId || !channelId) {
+      throw new Error(
+        "Ads SDK not initialized, contact jolibox developer support team"
+      );
+    }
+
+    const gAdsenseDomId = "google-adsense";
+    const testMode = config.testMode || false;
+    if (!document.getElementById(gAdsenseDomId)) {
+      const script = document.createElement("script");
+      script.id = gAdsenseDomId;
+      script.async = true;
+      script.crossOrigin = "anonymous";
+      script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${clientId}`;
+      if (testMode) {
+        script.setAttribute("data-adbreak-test", "on");
+      }
+      if (channelId) {
+        script.setAttribute("data-ad-channel", channelId);
+      }
+      document.head.appendChild(script);
+    }
+    window.adsbygoogle = window.adsbygoogle || [];
+
     this.clientId = clientId;
     this.channelId = channelId;
   }
 
+  /**
+   * Internal function to push adsbygoogle array
+   * @param params
+   */
   private push = (params: any = {}) => {
     window.adsbygoogle.push(params);
-  };
-
-  /**
-   * Get the global singleton of JoliboxAds instance
-   * @returns
-   */
-  static getInstance = () => {
-    return window.__JOLIBOX__.ads;
-  };
-
-  /**
-   * Use create factory function instead of constructor, create JoliboxAds instance synchronously
-   * @param config config for ads sdk create function
-   * @returns
-   */
-  static create = (config: IAdsInitParams) => {
-    if (typeof window === "undefined") {
-      return;
-    }
-
-    if (window.__JOLIBOX__.ads) {
-      return window.__JOLIBOX__.ads;
-    } else {
-      const clientId = window.__JOLIBOX__.internal.googleAds.clientId;
-      const channelId = window.__JOLIBOX__.internal.googleAds.channelId;
-
-      if (!clientId || !channelId) {
-        throw new Error(
-          "Ads SDK not initialized, contact jolibox developer support team"
-        );
-      }
-
-      const gAdsenseDomId = "google-adsense";
-      const testMode = config.testMode || false;
-      if (!document.getElementById(gAdsenseDomId)) {
-        const script = document.createElement("script");
-        script.id = gAdsenseDomId;
-        script.async = true;
-        script.crossOrigin = "anonymous";
-        script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${clientId}`;
-        if (testMode) {
-          script.setAttribute("data-adbreak-test", "on");
-        }
-        if (channelId) {
-          script.setAttribute("data-ad-channel", channelId);
-        }
-        document.head.appendChild(script);
-      }
-      window.adsbygoogle = window.adsbygoogle || [];
-
-      const ads = new JoliboxAds(clientId, channelId ?? "");
-      window.__JOLIBOX__.ads = ads;
-      return ads;
-    }
   };
 
   /**
    * The adConfig() call communicates the game's current configuration to the Ad Placement API. The Ad Placement API can use this to tune the way it preloads ads and to filter the kinds of ads it requests so they're suitable (eg. video ads that require sound).
    * @param params
    */
-  adConfig = (params: IAdConfigParams) => {
+  public adConfig = (params: IAdConfigParams) => {
     if (!this.configured) {
       this.configured = true;
       this.push(params);
@@ -327,7 +314,7 @@ export class JoliboxAds {
    * We want you to be able to change your monetization settings and control the user experience without having to edit and release a new version of your game, initially by specifying hints in the tag. But in future releases, we will be able to provide controls directly in the AdSense and AdMob frontends.
    * @param params
    */
-  adBreak = (params: IAdBreakParams) => {
+  public adBreak = (params: IAdBreakParams) => {
     this.push(params);
   };
 }

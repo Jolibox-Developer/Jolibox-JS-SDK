@@ -1,0 +1,27 @@
+default:
+  image: docker:24.0.5
+  services:
+    - docker:24.0.5-dind
+
+stages:
+  - build
+
+variables:
+  DOCKER_PROJECT: "dockerjolibox"
+  DOCKER_IMAGE_NAME: "fe-jolibox-sdk-docs"
+  ARTIFACT_VERSION: ${CI_PIPELINE_ID}.${CI_COMMIT_SHORT_SHA}-${TARGET_ENV}
+
+.runner:
+  tags:
+    - ali-stg-build-docker
+
+build-doc-prod:
+  stage: build
+  extends: .runner
+  variables:
+    TARGET_ENV: "prod"
+  script:
+    - docker build -t ${DOCKER_PROJECT}/${DOCKER_IMAGE_NAME}:${ARTIFACT_VERSION} .
+    - docker push ${DOCKER_PROJECT}/${DOCKER_IMAGE_NAME}:${ARTIFACT_VERSION}
+  only:
+    - main

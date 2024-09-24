@@ -13,8 +13,14 @@ declare global {
 }
 
 if (typeof window !== "undefined") {
-  window.__JOLIBOX__ = window.__JOLIBOX__ ?? {};
-  window.__JOLIBOX__.internal = window.__JOLIBOX__.internal ?? {};
+  window.__JOLIBOX__ = window.__JOLIBOX__ ?? {
+    internal: {
+      googleAds: {},
+    },
+  };
+  window.__JOLIBOX__.internal = window.__JOLIBOX__.internal ?? {
+    googleAds: {},
+  };
   window.__JOLIBOX__.internal.googleAds =
     window.__JOLIBOX__.internal.googleAds ?? {};
 }
