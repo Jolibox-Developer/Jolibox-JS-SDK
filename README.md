@@ -4,4 +4,26 @@
 
 Jolibox SDK module that enables you earn money from Ads
 
-[Ads SDK](./packages/ads/README.md)
+- Install the SDK
+
+  ```bash
+  npm install @jolibox/ads
+  ```
+
+- Documentation
+
+  [Ads SDK](./packages/ads/README.md)
+
+## Runtime SDK
+
+Jolibox SDK module that enables you interact with the Jolibox runtime
+
+- Install the SDK
+
+  ```bash
+  npm install @jolibox/runtime
+  ```
+
+- Documentation
+
+  [Runtime SDK](./packages/runtime/README.md)

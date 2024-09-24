@@ -1,6 +1,6 @@
 {
   "projectDocuments": ["README.md"],
-  "entryPoints": ["packages/ads", "packages/internal"],
+  "entryPoints": ["packages/ads", "packages/runtime"],
   "entryPointStrategy": "packages",
   "cacheBust": true
 }
