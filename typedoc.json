@@ -1,4 +1,5 @@
 {
-    "projectDocuments": ["packages/ads/README.md"],
-    "entryPoints": ["packages/ads/src/index.ts"]
+  "projectDocuments": ["README.md"],
+  "entryPoints": ["packages/ads", "packages/internal"],
+  "entryPointStrategy": "packages"
 }

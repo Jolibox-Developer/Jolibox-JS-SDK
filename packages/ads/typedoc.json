@@ -1,0 +1,5 @@
+{
+  "projectDocuments": ["README.md"],
+  "entryPoints": ["src/index.ts"],
+  "entryPointStrategy": "expand"
+}

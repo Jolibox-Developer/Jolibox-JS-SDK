@@ -4,11 +4,12 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "typedoc": "typedoc",
-    "serve:doc": "pnpm typedoc && serve -s docs",
+    "typedoc": "typedoc && pnpm typedoc:ads",
+    "serve:doc": "pnpm typedoc && serve docs",
     "dev:test-vite": "pnpm --filter @jolibox/test run dev",
     "build:internal": "pnpm --filter @jolibox/internal run build",
     "build:ads": "pnpm --filter @jolibox/ads-sdk run build",
+    "typedoc:ads": "pnpm --filter @jolibox/ads-sdk run typedoc",
     "build:test-vite": "pnpm --filter @jolibox/test run build:vite",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
