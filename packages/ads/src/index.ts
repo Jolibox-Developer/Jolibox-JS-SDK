@@ -1,38 +1,17 @@
 declare global {
   interface Window {
-    adsbygoogle: any;
-    __JOLIBOX__: {
-      internal: {
-        googleAds: {
-          clientId?: string;
-          channelId?: string;
-        };
-      };
-    };
+    adsbygoogle: Array<unknown>;
   }
-}
-
-if (typeof window !== "undefined") {
-  window.__JOLIBOX__ = window.__JOLIBOX__ ?? {
-    internal: {
-      googleAds: {},
-    },
-  };
-  window.__JOLIBOX__.internal = window.__JOLIBOX__.internal ?? {
-    googleAds: {},
-  };
-  window.__JOLIBOX__.internal.googleAds =
-    window.__JOLIBOX__.internal.googleAds ?? {};
 }
 
 export interface IAdsInitParams {
   /**
-   * Enable "data-adbreak-test" attributes
+   * (OPTIONAL) Enable "data-adbreak-test" attributes, default false
    */
   testMode?: boolean;
 
   /**
-   * Game ID provided by Jolibox
+   * (OPTIONAL) Game ID provided by Jolibox
    */
   gameId?: string;
 }
@@ -138,7 +117,7 @@ export interface IInterstitialsParams {
    * 'next' player navigates to the next level
    * 'browse' the player explores options outside of the gameplay
    */
-  type: "start" | "pause" | "next" | "browse" | "reward";
+  type: "start" | "pause" | "next" | "browse";
 
   /**
    * (OPTIONAL) a name for this particular ad placement within your game. It is an internal identifier, and is not shown to the player. In future releases this identifier may be used to enable additional reporting and optimization features.
@@ -236,8 +215,7 @@ export class JoliboxAds {
    */
   constructor(config: IAdsInitParams) {
     if (typeof window === "undefined") {
-      this.clientId = "";
-      this.channelId = "";
+      // skip if not in browser
       return;
     }
 
@@ -252,20 +230,27 @@ export class JoliboxAds {
    */
   private asyncInit = async (config: IAdsInitParams) => {
     if (typeof window === "undefined") {
+      // skip if not in browser
       return;
     }
+
+    // parse url params to get gameId
+    const urlParams = new URLSearchParams(window.location.search);
+    const gameId = urlParams.get("gameId") ?? config.gameId;
 
     let clientId = "ca-pub-7171363994453626";
     let channelId: string | undefined;
     try {
       // TODO: implement this
       const clientInfoResp = await fetch(
-        `https://openapi.jolibox.com/api/v1/ads/client/${config.gameId}`
+        `https://openapi.jolibox.com/api/v1/ads/client/${gameId}`
       );
       const clientInfo = await clientInfoResp.json();
       clientId = clientInfo.data.clientId;
       channelId = clientInfo.data.channelId;
-    } catch (e) {}
+    } catch (e) {
+      console.error("Failed to fetch client info", e);
+    }
 
     const gAdsenseDomId = "google-adsense";
     const testMode = config.testMode || false;
