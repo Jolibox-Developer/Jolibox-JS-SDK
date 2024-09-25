@@ -30,6 +30,11 @@ export interface IAdsInitParams {
    * Enable "data-adbreak-test" attributes
    */
   testMode?: boolean;
+
+  /**
+   * Game ID provided by Jolibox
+   */
+  gameId?: string;
 }
 
 export interface IAdConfigParams {
@@ -221,8 +226,8 @@ export interface IRewardParams {
  */
 export class JoliboxAds {
   private configured = false;
-  public clientId: string;
-  public channelId: string;
+  public clientId?: string;
+  public channelId?: string;
 
   /**
    * Create a new instance of JoliboxAds. The constructor will automatically load the Google Adsense script.
@@ -236,14 +241,31 @@ export class JoliboxAds {
       return;
     }
 
-    const clientId = window.__JOLIBOX__.internal.googleAds.clientId;
-    const channelId = window.__JOLIBOX__.internal.googleAds.channelId;
+    window.adsbygoogle = window.adsbygoogle || [];
+    this.asyncInit(config);
+  }
 
-    if (!clientId || !channelId) {
-      throw new Error(
-        "Ads SDK not initialized, contact jolibox developer support team"
-      );
+  /**
+   * Internal function to load Google Adsense script in async
+   * @param config
+   * @returns
+   */
+  private asyncInit = async (config: IAdsInitParams) => {
+    if (typeof window === "undefined") {
+      return;
     }
+
+    let clientId = "ca-pub-7171363994453626";
+    let channelId: string | undefined;
+    try {
+      // TODO: implement this
+      const clientInfoResp = await fetch(
+        `https://openapi.jolibox.com/api/v1/ads/client/${config.gameId}`
+      );
+      const clientInfo = await clientInfoResp.json();
+      clientId = clientInfo.data.clientId;
+      channelId = clientInfo.data.channelId;
+    } catch (e) {}
 
     const gAdsenseDomId = "google-adsense";
     const testMode = config.testMode || false;
@@ -261,11 +283,10 @@ export class JoliboxAds {
       }
       document.head.appendChild(script);
     }
-    window.adsbygoogle = window.adsbygoogle || [];
 
     this.clientId = clientId;
-    this.channelId = channelId;
-  }
+    this.channelId = channelId ?? "";
+  };
 
   /**
    * Internal function to push adsbygoogle array
