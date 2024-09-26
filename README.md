@@ -1,8 +1,14 @@
 # Jolibox SDK
 
+[Documentation](https://sdk-docs.jolibox.com/)
+
 ## Ads SDK
 
-Jolibox SDK module that enables you earn money from Ads
+Jolibox SDK module that enables you earn money from Ads. For the current version, we simply wrap the Google Ad Sense and Ads for Game.
+
+Most functions are strictly follow Ad Placement API design. You can read Google's official documentations [here](https://developers.google.com/ad-placement)
+
+**The current version is still in pre-release, so the API may change in the future.**
 
 - Install the SDK
 

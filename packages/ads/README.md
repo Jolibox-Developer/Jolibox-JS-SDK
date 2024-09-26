@@ -4,6 +4,8 @@ Jolibox SDK module that enables you earn money from Ads. For the current version
 
 Most functions are strictly follow Ad Placement API design. You can read Google's official documentations [here](https://developers.google.com/ad-placement)
 
+**The current version is still in pre-release, so the API may change in the future.**
+
 ## Installation
 
 - npm
@@ -29,7 +31,18 @@ Most functions are strictly follow Ad Placement API design. You can read Google'
 - Initialization
 
   ```typescript
+  import { JoliboxAds } from "@jolibox/ads-sdk";
+
   const ads = new JoliboxAds({ testMode: true });
+
+  // somewhere when you need to preload ads (e.g. in the game loading screen)
+  ads.adConfig({
+    preloadAdBreaks: "on",
+    sound: "on",
+    onReady: () => {
+      console.log("onReady");
+    },
+  });
 
   // Somewhere when you need a popup ads for reward
   ads.adBreak({
