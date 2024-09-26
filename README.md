@@ -14,7 +14,9 @@ Jolibox SDK module that enables you earn money from Ads
 
   [Ads SDK](./packages/ads/README.md)
 
-## Runtime SDK
+## Runtime SDK (WIP)
+
+**Still work in progress, please do not use this SDK yet.**
 
 Jolibox SDK module that enables you interact with the Jolibox runtime
 
