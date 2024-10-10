@@ -200,6 +200,19 @@ export interface IRewardParams {
   adViewed: () => void;
 }
 
+export type AdUnitFormat = "rectangle" | "vertical" | "horizontal";
+
+export interface IAdUnitParams {
+  /**
+   * The element to attach the ad unit to, either an HTMLElement or a string selector. Equivalent to the `<ins class="adsbygoogle"></ins>` in the Google ad unit code.
+   */
+  el: HTMLElement | string;
+  slot: string;
+  channelId?: string;
+  adFormat?: "auto" | AdUnitFormat | AdUnitFormat[]
+  fullWidthResponsive?: boolean;
+}
+
 /**
  * Jolibox Ads SDK
  */
@@ -323,6 +336,10 @@ export class JoliboxAds {
   public adBreak = (params: IAdBreakParams) => {
     this.push(params);
   };
+
+  public adUnit = () => {
+
+  }
 }
 
 export default JoliboxAds;
