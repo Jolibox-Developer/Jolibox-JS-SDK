@@ -60,4 +60,10 @@ Most functions are strictly follow Ad Placement API design. You can read Google'
       console.log("adBreakDone");
     },
   });
+
+  // If you need to show a banner ad, you should call the following function when you start the App
+  ads.adUnit({
+    el: "#banner",
+    position: "TOP",
+  });
   ```

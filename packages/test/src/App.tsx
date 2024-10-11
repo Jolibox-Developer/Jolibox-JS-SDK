@@ -15,6 +15,11 @@ export const App = () => {
         console.log("onReady");
       },
     });
+
+    ads.adUnit({
+      el: "#testads",
+      slot: "5530307740",
+    });
   }, []);
 
   const preroll = () => {
@@ -59,6 +64,7 @@ export const App = () => {
         <button onClick={preroll}>Test preroll</button>
         <button onClick={insertial}>Test Insertial</button>
         <button onClick={reward}>Test reward</button>
+        <div id="testads" style={{ width: "500px", height: "300px" }}></div>
       </div>
     </div>
   );

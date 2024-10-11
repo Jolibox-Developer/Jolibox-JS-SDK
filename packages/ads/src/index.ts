@@ -24,7 +24,7 @@ export interface IAdConfigParams {
    *
    * Setting preloadAdBreaks after the first call to adBreak() has no effect.
    */
-  preloadAdBreaks: "on" | "auto"; // default: 'auto'
+  preloadAdBreaks?: "on" | "auto"; // default: 'auto'
 
   /**
    * (OPTIONAL) Whether the game is currently playing sound.
@@ -35,13 +35,13 @@ export interface IAdConfigParams {
    *
    * The default value is sound on. So most games will need to make a call to adConfig() when they start to declare that they have sound enabled.
    */
-  sound: "on" | "off"; // default: 'on'
+  sound?: "on" | "off"; // default: 'on'
 
   /**
    * (OPTIONAL) Called when the API has initialized and has finished preloading ads (if you requested preloading using the preloadAdBreaks above).
    * @returns
    */
-  onReady: () => void;
+  onReady?: () => void;
 }
 
 /**
@@ -200,17 +200,59 @@ export interface IRewardParams {
   adViewed: () => void;
 }
 
+/**
+ * Ad unit format, can be 'rectangle', 'vertical', 'horizontal'
+ */
 export type AdUnitFormat = "rectangle" | "vertical" | "horizontal";
+
+export type AdUnitPosition = "TOP" | "BOTTOM" | "LEFT" | "RIGHT" | "CENTER";
 
 export interface IAdUnitParams {
   /**
-   * The element to attach the ad unit to, either an HTMLElement or a string selector. Equivalent to the `<ins class="adsbygoogle"></ins>` in the Google ad unit code.
+   * The element to attach the ad unit to, either an HTMLElement or a string selector. Should be the parent element of the ad unit (<ins> tag).
    */
   el: HTMLElement | string;
-  slot: string;
+
+  /**
+   * (OPTIONAL) Reserved for future usage. The slot name of the ad unit, currently we suggest using position as the slot name. Either position or slot should be set.
+   */
+  slot?: string;
+
+  /**
+   * (OPTIONAL) The position of the ad unit. Can be 'TOP', 'BOTTOM', 'LEFT', 'RIGHT', 'CENTER'. Default is 'TOP'. Either position or slot should be set.
+   */
+  position?: AdUnitPosition;
+
+  /**
+   * (OPTIONAL) Channel ID for the ad unit. We will set the Channel ID automatically if not provided. Default is empty.
+   */
   channelId?: string;
-  adFormat?: "auto" | AdUnitFormat | AdUnitFormat[]
-  fullWidthResponsive?: boolean;
+
+  /**
+   * (OPTIONAL) Ad format for the ad unit. Can be 'auto' or a single format or an array of formats. Default is 'auto'. If passed as an array, the array will be joined by ', ' and pass to the data-ad-format attribute.
+   */
+  adFormat?: "auto" | AdUnitFormat | AdUnitFormat[];
+
+  /**
+   * (OPTIONAL) Whether the ad unit should be full width and responsive. Default is false.
+   */
+  fullWidthResponsive?: "true" | "false";
+
+  /**
+   * (OPTIONAL) Custom style for the ad unit. Default is empty.
+   */
+  style?: string;
+}
+
+interface IJoliboxAdsResponse {
+  data: {
+    channelId: string;
+    clientId: string;
+    units: Array<{
+      id: string;
+      position: AdUnitPosition;
+    }>;
+  };
 }
 
 /**
@@ -218,8 +260,10 @@ export interface IAdUnitParams {
  */
 export class JoliboxAds {
   private configured = false;
+  public config: IAdsInitParams = {};
   public clientId?: string;
   public channelId?: string;
+  public units?: { [key in AdUnitPosition]: string };
 
   /**
    * Create a new instance of JoliboxAds. The constructor will automatically load the Google Adsense script.
@@ -232,9 +276,44 @@ export class JoliboxAds {
       return;
     }
 
+    this.config = config;
     window.adsbygoogle = window.adsbygoogle || [];
     this.asyncInit(config);
   }
+
+  private getGameId = () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get("gameId") ?? this.config.gameId;
+  };
+
+  private asyncLoad = async () => {
+    let clientId = "ca-pub-7171363994453626";
+    let channelId: string | undefined;
+    let units: { [key in AdUnitPosition]: string } = {
+      TOP: "",
+      BOTTOM: "",
+      LEFT: "",
+      RIGHT: "",
+      CENTER: "",
+    };
+    try {
+      // TODO: implement this
+      const clientInfoResp = await fetch(
+        `https://openapi.jolibox.com/api/v1/ads/client/${this.getGameId()}`
+      );
+      const clientInfo: IJoliboxAdsResponse = await clientInfoResp.json();
+      clientId = clientInfo.data.clientId;
+      channelId = clientInfo.data.channelId;
+      clientInfo.data.units.forEach((unit) => {
+        units[unit.position] = unit.id;
+      });
+    } catch (e) {
+      console.error("Failed to fetch client info", e);
+    }
+    this.clientId = clientId;
+    this.channelId = channelId;
+    this.units = units;
+  };
 
   /**
    * Internal function to load Google Adsense script in async
@@ -247,23 +326,7 @@ export class JoliboxAds {
       return;
     }
 
-    // parse url params to get gameId
-    const urlParams = new URLSearchParams(window.location.search);
-    const gameId = urlParams.get("gameId") ?? config.gameId;
-
-    let clientId = "ca-pub-7171363994453626";
-    let channelId: string | undefined;
-    try {
-      // TODO: implement this
-      const clientInfoResp = await fetch(
-        `https://openapi.jolibox.com/api/v1/ads/client/${gameId}`
-      );
-      const clientInfo = await clientInfoResp.json();
-      clientId = clientInfo.data.clientId;
-      channelId = clientInfo.data.channelId;
-    } catch (e) {
-      console.error("Failed to fetch client info", e);
-    }
+    await this.asyncLoad();
 
     const gAdsenseDomId = "google-adsense";
     const testMode = config.testMode || false;
@@ -272,18 +335,15 @@ export class JoliboxAds {
       script.id = gAdsenseDomId;
       script.async = true;
       script.crossOrigin = "anonymous";
-      script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${clientId}`;
+      script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${this.clientId}`;
       if (testMode) {
         script.setAttribute("data-adbreak-test", "on");
       }
-      if (channelId) {
-        script.setAttribute("data-ad-channel", channelId);
+      if (this.channelId) {
+        script.setAttribute("data-ad-channel", this.channelId);
       }
       document.head.appendChild(script);
     }
-
-    this.clientId = clientId;
-    this.channelId = channelId ?? "";
   };
 
   /**
@@ -337,9 +397,89 @@ export class JoliboxAds {
     this.push(params);
   };
 
-  public adUnit = () => {
+  /**
+   * adUnit() is a function that creates an ad unit and attaches it to a parent element. The ad unit is a single ad placement that can be used to show ads.
+   *
+   * Currently we only provide support for creating ad units as `<ins>` tags with the class 'adsbygoogle'. This is the standard way to create ad units with Google AdSense.
+   *
+   * After calling this method, the ad unit is attached to the parent element you specify as el in the params object.
+   *
+   * By default, the client ID and channel ID are automatically set by the SDK. And the slot name is set to the position of the ad unit. You can override these values by passing the slot and channelId in the params object.
+   *
+   * @param params
+   * @returns
+   */
+  public adUnit = async (params: IAdUnitParams) => {
+    if (!this.clientId) {
+      await this.asyncLoad();
+    }
+    if (document.querySelector("#joilbox-ads")) {
+      console.warn("Ad unit already set, skipping");
+      return;
+    }
+    const {
+      el: inputEl,
+      slot: inputSlot,
+      position,
+      channelId: inputChannelId,
+      adFormat: inputAdFormat,
+      fullWidthResponsive,
+      style,
+    } = params;
 
-  }
+    let el: HTMLElement | null;
+    if (!inputEl) {
+      throw new Error("targeting element is required");
+    }
+    if (typeof inputEl === "string") {
+      el = document.querySelector(inputEl);
+    } else {
+      el = inputEl;
+    }
+    if (!el) {
+      throw new Error("targeting element not found");
+    }
+
+    if (!inputSlot && !position) {
+      throw new Error("either slot or position is required");
+    }
+
+    let slot = inputSlot;
+    let channelId = inputChannelId;
+    if (!slot) {
+      slot = this.units?.[position!] ?? "";
+    }
+    if (!channelId) {
+      channelId = this.channelId;
+    }
+
+    const adFormat =
+      typeof inputAdFormat === "object"
+        ? inputAdFormat.join(", ")
+        : inputAdFormat;
+
+    const ins = document.createElement("ins");
+    ins.className = "adsbygoogle";
+    ins.id = "jolibox-ads";
+    ins.style.display = "block";
+    ins.setAttribute("data-ad-client", this.clientId!);
+    ins.setAttribute("data-ad-slot", slot);
+    if (adFormat) {
+      ins.setAttribute("data-ad-format", adFormat);
+    }
+    if (fullWidthResponsive) {
+      ins.setAttribute("data-full-width-responsive", fullWidthResponsive);
+    }
+    if (channelId) {
+      ins.setAttribute("data-ad-channel", channelId);
+    }
+    if (style) {
+      ins.setAttribute("style", style);
+    }
+
+    el.appendChild(ins);
+    this.push({});
+  };
 }
 
 export default JoliboxAds;
