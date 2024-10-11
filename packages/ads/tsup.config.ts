@@ -10,9 +10,4 @@ export default defineConfig({
   format: ["cjs", "esm"],
   minify: true,
   dts: true,
-  outExtension({ format }) {
-    return {
-      js: `.${format}.js`,
-    };
-  },
 });

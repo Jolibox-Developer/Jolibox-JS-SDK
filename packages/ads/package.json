@@ -1,6 +1,6 @@
 {
   "name": "@jolibox/ads-sdk",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Jolibox JavaScript SDK for Ads",
   "homepage": "https://sdk-docs.jolibox.com",
   "repository": {
@@ -10,7 +10,7 @@
   },
   "main": "dist/index.cjs",
   "type": "module",
-  "module": "dist/index.esm.js",
+  "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsup",
@@ -24,5 +24,12 @@
     "ads"
   ],
   "author": "Jolibox",
-  "license": "MIT"
+  "license": "MIT",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  }
 }
