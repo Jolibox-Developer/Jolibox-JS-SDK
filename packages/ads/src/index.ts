@@ -223,10 +223,10 @@ export interface IAdUnitParams {
    */
   position?: AdUnitPosition;
 
-  /**
-   * (OPTIONAL) Channel ID for the ad unit. We will set the Channel ID automatically if not provided. Default is empty.
-   */
-  channelId?: string;
+  // /**
+  //  * (OPTIONAL) Channel ID for the ad unit. We will set the Channel ID automatically if not provided. Default is empty.
+  //  */
+  // channelId?: string;
 
   /**
    * (OPTIONAL) Ad format for the ad unit. Can be 'auto' or a single format or an array of formats. Default is 'auto'. If passed as an array, the array will be joined by ', ' and pass to the data-ad-format attribute.
@@ -418,7 +418,7 @@ export class JoliboxAds {
       el: inputEl,
       slot: inputSlot,
       position,
-      channelId: inputChannelId,
+      // channelId: inputChannelId,
       adFormat: inputAdFormat,
       fullWidthResponsive,
       style,
@@ -442,16 +442,16 @@ export class JoliboxAds {
     }
 
     let slot = inputSlot;
-    let channelId = inputChannelId;
     if (!slot) {
       slot = this.unitId;
     }
     if (!slot) {
       throw new Error("slot is required");
     }
-    if (!channelId) {
-      channelId = this.channelId;
-    }
+    // let channelId = inputChannelId;
+    // if (!channelId) {
+    //   channelId = this.channelId;
+    // }
 
     const adFormat =
       typeof inputAdFormat === "object"
@@ -470,9 +470,9 @@ export class JoliboxAds {
     if (fullWidthResponsive) {
       ins.setAttribute("data-full-width-responsive", fullWidthResponsive);
     }
-    if (channelId) {
-      ins.setAttribute("data-ad-channel", channelId);
-    }
+    // if (channelId) {
+    //   ins.setAttribute("data-ad-channel", channelId);
+    // }
     if (style) {
       ins.setAttribute("style", style);
     }
