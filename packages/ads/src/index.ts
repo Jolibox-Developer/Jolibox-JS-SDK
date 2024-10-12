@@ -245,13 +245,12 @@ export interface IAdUnitParams {
 }
 
 interface IJoliboxAdsResponse {
+  code: "SUCCESS" | string;
+  message: "SUCCESS" | string;
   data: {
     channelId: string;
     clientId: string;
-    units: Array<{
-      id: string;
-      position: AdUnitPosition;
-    }>;
+    unitId: string;
   };
 }
 
@@ -263,7 +262,7 @@ export class JoliboxAds {
   public config: IAdsInitParams = {};
   public clientId?: string;
   public channelId?: string;
-  public units?: { [key in AdUnitPosition]: string };
+  public unitId?: string;
 
   /**
    * Create a new instance of JoliboxAds. The constructor will automatically load the Google Adsense script.
@@ -289,30 +288,28 @@ export class JoliboxAds {
   private asyncLoad = async () => {
     let clientId = "ca-pub-7171363994453626";
     let channelId: string | undefined;
-    let units: { [key in AdUnitPosition]: string } = {
-      TOP: "",
-      BOTTOM: "",
-      LEFT: "",
-      RIGHT: "",
-      CENTER: "",
-    };
+    let unitId: string | undefined;
+    const baseUrl = this.config.testMode
+      ? "https://test-api.jolibox.com"
+      : "https://api.jolibox.com";
+
+    const objectId = window.encodeURIComponent(
+      window.btoa(this.getGameId() ?? "")
+    );
     try {
-      // TODO: implement this
       const clientInfoResp = await fetch(
-        `https://openapi.jolibox.com/api/v1/ads/client/${this.getGameId()}`
+        `${baseUrl}/public/ads?objectId=${objectId}`
       );
       const clientInfo: IJoliboxAdsResponse = await clientInfoResp.json();
       clientId = clientInfo.data.clientId;
       channelId = clientInfo.data.channelId;
-      clientInfo.data.units.forEach((unit) => {
-        units[unit.position] = unit.id;
-      });
+      unitId = clientInfo.data.unitId;
     } catch (e) {
       console.error("Failed to fetch client info", e);
     }
     this.clientId = clientId;
     this.channelId = channelId;
-    this.units = units;
+    this.unitId = unitId;
   };
 
   /**
@@ -447,7 +444,10 @@ export class JoliboxAds {
     let slot = inputSlot;
     let channelId = inputChannelId;
     if (!slot) {
-      slot = this.units?.[position!] ?? "";
+      slot = this.unitId;
+    }
+    if (!slot) {
+      throw new Error("slot is required");
     }
     if (!channelId) {
       channelId = this.channelId;

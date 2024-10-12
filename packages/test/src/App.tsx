@@ -3,7 +3,7 @@ import { useEffect, useMemo } from "react";
 
 export const App = () => {
   const ads = useMemo(
-    () => new JoliboxAds({ testMode: true, gameId: "gameId" }),
+    () => new JoliboxAds({ testMode: true, gameId: "G31841342933817143317925877328" }),
     []
   );
 
