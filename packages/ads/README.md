@@ -63,7 +63,6 @@ Most functions are strictly follow Ad Placement API design. You can read Google'
 
   // If you need to show a banner ad, you should call the following function when you start the App
   ads.adUnit({
-    el: "#banner",
-    position: "TOP",
+    el: "#banner", // or document.getElementById("banner")
   });
   ```
