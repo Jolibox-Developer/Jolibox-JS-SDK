@@ -20,19 +20,7 @@
                     "summary": [
                         {
                             "kind": "text",
-                            "text": "(OPTIONAL) 保留供将来使用。广告单元的槽名称，目前我们建议使用 position 作为槽名称。应设置 position 或 slot 之一。"
-                        }
-                    ]
-                }
-            },
-            "position": {
-                "comment": {
-                    "blockTags": [],
-                    "modifierTags": {},
-                    "summary": [
-                        {
-                            "kind": "text",
-                            "text": "(OPTIONAL) The position of the ad unit. Can be 'TOP', 'BOTTOM', 'LEFT', 'RIGHT', 'CENTER'. Default is 'TOP'. Either position or slot should be set."
+                            "text": "（可选）保留供将来使用。广告单元的槽 ID。目前槽 ID 由 SDK 自动设置。"
                         }
                     ]
                 }
@@ -44,7 +32,7 @@
                     "summary": [
                         {
                             "kind": "text",
-                            "text": "(OPTIONAL) Ad format for the ad unit. Can be 'auto' or a single format or an array of formats. Default is 'auto'. If passed as an array, the array will be joined by ', ' and pass to the data-ad-format attribute."
+                            "text": "（可选）广告单元的广告格式。可以是 'auto'、单一格式或格式数组。默认值为 'auto'。如果传递为数组，数组将通过 ', ' 连接并传递给 data-ad-format 属性。"
                         }
                     ]
                 }
@@ -56,7 +44,7 @@
                     "summary": [
                         {
                             "kind": "text",
-                            "text": "(OPTIONAL) Whether the ad unit should be full width and responsive. Default is false."
+                            "text": "（可选）广告单元是否应全宽且响应式。默认值为 false。"
                         }
                     ]
                 }
@@ -68,7 +56,7 @@
                     "summary": [
                         {
                             "kind": "text",
-                            "text": "(OPTIONAL) Custom style for the ad unit. Default is empty."
+                            "text": "（可选）广告单元的自定义样式。默认值为空。"
                         }
                     ]
                 }

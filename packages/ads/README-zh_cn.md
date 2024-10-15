@@ -63,6 +63,6 @@ Jolibox SDK 模块使您可以通过广告赚钱。在当前版本中，我们�
 
   // 如果需要显示横幅广告，应在应用启动时调用以下函数
   ads.adUnit({
-    el: "#banner",
+    el: "#banner", // 或者 document.getElementById("banner")
   });
   ```

@@ -41,7 +41,12 @@
                 "comment": {
                     "blockTags": [],
                     "modifierTags": {},
-                    "summary": []
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "(OPTIONAL) Called after the ad is finished (for any reason). For rewarded ads, it is called after either adDismissed or adViewed, depending on player actions. This function should be used to resume game flow. For example, use to unmute the sound and start the next level."
+                        }
+                    ]
                 }
             },
             "adBreakDone": {

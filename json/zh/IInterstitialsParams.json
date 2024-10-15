@@ -8,7 +8,7 @@
                     "summary": [
                         {
                             "kind": "text",
-                            "text": "'start' before the gameplay starts (after UI has rendered)\n'pause' the player pauses the game\n'next' player navigates to the next level\n'browse' the player explores options outside of the gameplay"
+                            "text": "'start' 表示在游戏开始前（在UI渲染后）\n'pause' 表示玩家暂停游戏\n'next' 表示玩家导航到下一关\n'browse' 表示玩家在游戏之外探索其他选项"
                         }
                     ]
                 }
@@ -20,7 +20,7 @@
                     "summary": [
                         {
                             "kind": "text",
-                            "text": "(OPTIONAL) a name for this particular ad placement within your game. It is an internal identifier, and is not shown to the player. In future releases this identifier may be used to enable additional reporting and optimization features.\n\nWe recommend you name all of your placements."
+                            "text": "(可选) 此广告位在游戏中的名称。它是一个内部标识符，不会显示给玩家。未来的版本中，可能会使用此标识符来启用额外的报告和优化功能。\n\n我们建议您为所有广告位命名。"
                         }
                     ]
                 }
@@ -32,7 +32,7 @@
                     "summary": [
                         {
                             "kind": "text",
-                            "text": "(OPTIONAL) Called before the ad is displayed. The game should pause and mute the sound. These actions must be done synchronously. The ad will be displayed immediately after this callback finishes."
+                            "text": "(可选) 在广告显示之前调用。游戏应暂停并静音。这些操作必须同步完成。广告将在此回调结束后立即显示。"
                         }
                     ]
                 }
@@ -41,7 +41,12 @@
                 "comment": {
                     "blockTags": [],
                     "modifierTags": {},
-                    "summary": []
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "(可选) 广告结束后（无论出于何种原因）调用。对于奖励广告，在 adDismissed 或 adViewed 之后调用，具体取决于玩家的操作。此函数应用于恢复游戏流程。例如，用于取消静音并开始下一关。"
+                        }
+                    ]
                 }
             },
             "adBreakDone": {
@@ -51,7 +56,7 @@
                     "summary": [
                         {
                             "kind": "text",
-                            "text": "(OPTIONAL) Always called as the last step in an adBreak(), even if there was no ad shown. Function takes as argument a placementInfo object"
+                            "text": "(可选) 始终在adBreak()的最后一步调用，即使没有显示广告。函数接收一个placementInfo对象作为参数。"
                         }
                     ]
                 }

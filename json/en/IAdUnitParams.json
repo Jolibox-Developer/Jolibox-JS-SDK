@@ -20,19 +20,7 @@
                     "summary": [
                         {
                             "kind": "text",
-                            "text": "(OPTIONAL) Reserved for future usage. The slot name of the ad unit, currently we suggest using position as the slot name. Either position or slot should be set."
-                        }
-                    ]
-                }
-            },
-            "position": {
-                "comment": {
-                    "blockTags": [],
-                    "modifierTags": {},
-                    "summary": [
-                        {
-                            "kind": "text",
-                            "text": "(OPTIONAL) The position of the ad unit. Can be 'TOP', 'BOTTOM', 'LEFT', 'RIGHT', 'CENTER'. Default is 'TOP'. Either position or slot should be set."
+                            "text": "(OPTIONAL) Reserved for future usage. The slot ID of the ad unit. Currently the slot ID is automatically set by the SDK."
                         }
                     ]
                 }

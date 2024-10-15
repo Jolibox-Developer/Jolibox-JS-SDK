@@ -6,7 +6,7 @@
             "summary": [
                 {
                     "kind": "text",
-                    "text": "PlacementInfo object passed by **adBreakDone** function"
+                    "text": "由 **adBreakDone** 函数传递的 PlacementInfo 对象"
                 }
             ]
         },
@@ -18,7 +18,7 @@
                     "summary": [
                         {
                             "kind": "text",
-                            "text": "the type argument passed to adBreak()"
+                            "text": "传递给 adBreak() 的 type 参数"
                         }
                     ]
                 }
@@ -30,7 +30,7 @@
                     "summary": [
                         {
                             "kind": "text",
-                            "text": "the name argument passed to adBreak()"
+                            "text": "传递给 adBreak() 的 name 参数"
                         }
                     ]
                 }
@@ -42,7 +42,7 @@
                     "summary": [
                         {
                             "kind": "text",
-                            "text": "the status of this placement and can be one of the following values:\n\n| breakStatus | Reason |\n| -------- | ------- |\n| 'notReady'\t| The Ad Placement API had not initialised |\n| 'timeout' | A placement timed out because the Ad Placement API took too long to respond |\n| 'invalid' | The placement was invalid and was ignored–for instance there should only be one preroll placement per page load, subsequent prerolls are failed with this status |\n| 'error' | There was a JavaScript error in a callback |\n| 'noAdPreloaded' |\tAn ad had not been preloaded yet so this placement was skipped |\n| 'frequencyCapped' |\tAn ad wasn't shown because the frequency cap was applied to this placement |\n| 'ignored' |\tThe user didn't click on a reward prompt before they reached the next placement, that is showAdFn() wasn't called before the next adBreak(). |\n| 'other' |\tThe ad was not shown for another reason. (e.g., The ad was still being fetched, or a previously cached ad was disposed because the screen was resized/rotated.) |\n| 'dismissed' |\tThe user dismissed a rewarded ad before viewing it to completion |\n| 'viewed' |\tThe ad was viewed by the user |"
+                            "text": "此广告位的状态，可以是以下值之一：\n\n| breakStatus | 原因 |\n| -------- | ------- |\n| 'notReady' | 广告位 API 尚未初始化 |\n| 'timeout' | 由于广告位 API 响应时间过长，广告位超时 |\n| 'invalid' | 广告位无效并被忽略——例如每次页面加载只应有一个前贴广告，后续的前贴广告会因该状态失败 |\n| 'error' | 回调中出现了 JavaScript 错误 |\n| 'noAdPreloaded' | 尚未预加载广告，因此跳过此广告位 |\n| 'frequencyCapped' | 未显示广告，因为此广告位的频率限制已应用 |\n| 'ignored' | 用户在到达下一个广告位之前没有点击奖励提示，即 showAdFn() 没有在下一个 adBreak() 之前调用 |\n| 'other' | 由于其他原因未显示广告。（例如，广告仍在获取中，或者由于屏幕调整大小/旋转，之前缓存的广告已被处理掉。）|\n| 'dismissed' | 用户在观看完广告之前关闭了奖励广告 |\n| 'viewed' | 用户已观看广告 |"
                         }
                     ]
                 }

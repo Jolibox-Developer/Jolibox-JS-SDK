@@ -6,7 +6,7 @@
             "summary": [
                 {
                     "kind": "text",
-                    "text": "Parameter when calling preroll type adBreak"
+                    "text": "调用前贴片类型的 adBreak 时的参数"
                 }
             ]
         },
@@ -18,7 +18,7 @@
                     "summary": [
                         {
                             "kind": "text",
-                            "text": "'preroll' before the game loads (before UI has rendered)"
+                            "text": "'preroll' 在游戏加载前（在UI渲染之前）"
                         }
                     ]
                 }
@@ -30,7 +30,7 @@
                     "summary": [
                         {
                             "kind": "text",
-                            "text": "(OPTIONAL) Always called as the last step in an adBreak(), even if there was no ad shown. Function takes as argument a placementInfo object"
+                            "text": "(可选) 始终在 adBreak() 的最后一步调用，即使没有显示广告。函数接收一个 placementInfo 对象作为参数。"
                         }
                     ]
                 }
