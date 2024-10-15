@@ -214,14 +214,14 @@ export interface IAdUnitParams {
   el: HTMLElement | string;
 
   /**
-   * (OPTIONAL) Reserved for future usage. The slot name of the ad unit, currently we suggest using position as the slot name. Either position or slot should be set.
+   * (OPTIONAL) Reserved for future usage. The slot ID of the ad unit. Currently the slot ID is automatically set by the SDK.
    */
   slot?: string;
 
-  /**
-   * (OPTIONAL) The position of the ad unit. Can be 'TOP', 'BOTTOM', 'LEFT', 'RIGHT', 'CENTER'. Default is 'TOP'. Either position or slot should be set.
-   */
-  position?: AdUnitPosition;
+  // /**
+  //  * (OPTIONAL) The position of the ad unit. Can be 'TOP', 'BOTTOM', 'LEFT', 'RIGHT', 'CENTER'. Default is 'TOP'. Either position or slot should be set.
+  //  */
+  // position?: AdUnitPosition;
 
   // /**
   //  * (OPTIONAL) Channel ID for the ad unit. We will set the Channel ID automatically if not provided. Default is empty.
@@ -417,7 +417,7 @@ export class JoliboxAds {
     const {
       el: inputEl,
       slot: inputSlot,
-      position,
+      // position,
       // channelId: inputChannelId,
       adFormat: inputAdFormat,
       fullWidthResponsive,
@@ -437,9 +437,9 @@ export class JoliboxAds {
       throw new Error("targeting element not found");
     }
 
-    if (!inputSlot && !position) {
-      throw new Error("either slot or position is required");
-    }
+    // if (!inputSlot && !position) {
+    //   throw new Error("either slot or position is required");
+    // }
 
     let slot = inputSlot;
     if (!slot) {
@@ -454,9 +454,9 @@ export class JoliboxAds {
     // }
 
     const adFormat =
-      typeof inputAdFormat === "object"
+      (typeof inputAdFormat === "object"
         ? inputAdFormat.join(", ")
-        : inputAdFormat;
+        : inputAdFormat) ?? "auto";
 
     const ins = document.createElement("ins");
     ins.className = "adsbygoogle";
@@ -464,9 +464,8 @@ export class JoliboxAds {
     ins.style.display = "block";
     ins.setAttribute("data-ad-client", this.clientId!);
     ins.setAttribute("data-ad-slot", slot);
-    if (adFormat) {
-      ins.setAttribute("data-ad-format", adFormat);
-    }
+    ins.setAttribute("data-ad-format", adFormat);
+
     if (fullWidthResponsive) {
       ins.setAttribute("data-full-width-responsive", fullWidthResponsive);
     }
