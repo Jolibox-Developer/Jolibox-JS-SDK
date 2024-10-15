@@ -1,12 +1,12 @@
 # Jolibox Ads SDK
 
-Jolibox SDK module that enables you earn money from Ads. For the current version, we simply wrap the Google Ad Sense and Ads for Game.
+Jolibox SDK 模块使您可以通过广告赚钱。在当前版本中，我们简单地封装了 Google Ad Sense 和 Ads for Game。
 
-Most functions are strictly follow Ad Placement API design. You can read Google's official documentations [here](https://developers.google.com/ad-placement)
+大多数功能严格遵循广告展示 API 设计。您可以在[这里](https://developers.google.com/ad-placement)阅读 Google 的官方文档。
 
-**The current version is still in pre-release, so the API may change in the future.**
+**当前版本仍处于预发布阶段，因此 API 可能会在未来发生变化。**
 
-## Installation
+## 安装
 
 - npm
 
@@ -26,16 +26,16 @@ Most functions are strictly follow Ad Placement API design. You can read Google'
   yarn add @jolibox/ads-sdk
   ```
 
-## Basic usage
+## 基本用法
 
-- Initialization
+- 初始化
 
   ```typescript
   import { JoliboxAds } from "@jolibox/ads-sdk";
 
   const ads = new JoliboxAds({ testMode: true });
 
-  // somewhere when you need to preload ads (e.g. in the game loading screen)
+  // 在需要预加载广告的地方（例如在游戏加载屏幕中）
   ads.adConfig({
     preloadAdBreaks: "on",
     sound: "on",
@@ -44,7 +44,7 @@ Most functions are strictly follow Ad Placement API design. You can read Google'
     },
   });
 
-  // Somewhere when you need a popup ads for reward
+  // 在需要弹出奖励广告的地方
   ads.adBreak({
     type: "reward",
     beforeReward(showAdFn) {
@@ -61,7 +61,7 @@ Most functions are strictly follow Ad Placement API design. You can read Google'
     },
   });
 
-  // If you need to show a banner ad, you should call the following function when you start the App
+  // 如果需要显示横幅广告，应在应用启动时调用以下函数
   ads.adUnit({
     el: "#banner",
   });

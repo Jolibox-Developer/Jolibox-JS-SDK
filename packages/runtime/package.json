@@ -9,6 +9,7 @@
   "scripts": {
     "build": "tsup",
     "typedoc": "typedoc",
+    "typedoc:i18n": "typedoc --plugin typedoc-plugin-localization --generate-json ../../json/en",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

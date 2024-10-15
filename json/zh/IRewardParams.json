@@ -1,0 +1,117 @@
+{
+    "IRewardParams": {
+        "properties": {
+            "type": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "'reward' a rewarded ad"
+                        }
+                    ]
+                }
+            },
+            "name": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "(OPTIONAL) a name for this particular ad placement within your game. It is an internal identifier, and is not shown to the player. In future releases this identifier may be used to enable additional reporting and optimization features.\n\nWe recommend you name all of your placements."
+                        }
+                    ]
+                }
+            },
+            "beforeAd": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "(OPTIONAL) Called before the ad is displayed. The game should pause and mute the sound. These actions must be done synchronously. The ad will be displayed immediately after this callback finishes."
+                        }
+                    ]
+                }
+            },
+            "afterAd": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "(OPTIONAL) Called after the ad is finished (for any reason). For rewarded ads, it is called after either adDismissed or adViewed, depending on player actions. This function should be used to resume game flow. For example, use to unmute the sound and start the next level."
+                        }
+                    ]
+                }
+            },
+            "adBreakDone": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "(OPTIONAL) Always called as the last step in an adBreak(), even if there was no ad shown. Function takes as argument a placementInfo object defined"
+                        }
+                    ]
+                }
+            },
+            "beforeReward": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "Called if a rewarded ad is available. The function should take a single argument–showAdFn() which must be called to display the rewarded ad."
+                        }
+                    ]
+                }
+            },
+            "adDismissed": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "Called only for rewarded ads when the player dismisses the ad. It is only called if the player dismisses the ad before it completes. In this case the reward should not be granted."
+                        }
+                    ]
+                }
+            },
+            "adViewed": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "Called only for rewarded ads when the player completes the ad and should be granted the reward."
+                        }
+                    ]
+                }
+            }
+        },
+        "methods": {
+            "__type": {
+                "comment": {
+                    "blockTags": [
+                        {
+                            "skipRendering": false,
+                            "tag": "@returns",
+                            "content": []
+                        }
+                    ],
+                    "modifierTags": {},
+                    "summary": []
+                }
+            }
+        }
+    }
+}

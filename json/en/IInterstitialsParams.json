@@ -1,0 +1,76 @@
+{
+    "IInterstitialsParams": {
+        "properties": {
+            "type": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "'start' before the gameplay starts (after UI has rendered)\n'pause' the player pauses the game\n'next' player navigates to the next level\n'browse' the player explores options outside of the gameplay"
+                        }
+                    ]
+                }
+            },
+            "name": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "(OPTIONAL) a name for this particular ad placement within your game. It is an internal identifier, and is not shown to the player. In future releases this identifier may be used to enable additional reporting and optimization features.\n\nWe recommend you name all of your placements."
+                        }
+                    ]
+                }
+            },
+            "beforeAd": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "(OPTIONAL) Called before the ad is displayed. The game should pause and mute the sound. These actions must be done synchronously. The ad will be displayed immediately after this callback finishes."
+                        }
+                    ]
+                }
+            },
+            "afterAd": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": []
+                }
+            },
+            "adBreakDone": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "(OPTIONAL) Always called as the last step in an adBreak(), even if there was no ad shown. Function takes as argument a placementInfo object"
+                        }
+                    ]
+                }
+            }
+        },
+        "methods": {
+            "__type": {
+                "comment": {
+                    "blockTags": [
+                        {
+                            "skipRendering": false,
+                            "tag": "@returns",
+                            "content": []
+                        }
+                    ],
+                    "modifierTags": {},
+                    "summary": []
+                }
+            }
+        }
+    }
+}

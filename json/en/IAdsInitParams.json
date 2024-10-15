@@ -1,0 +1,31 @@
+{
+    "IAdsInitParams": {
+        "properties": {
+            "testMode": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "(OPTIONAL) Enable \"data-adbreak-test\" attributes, default false"
+                        }
+                    ]
+                }
+            },
+            "gameId": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "(OPTIONAL) Game ID provided by Jolibox"
+                        }
+                    ]
+                }
+            }
+        },
+        "methods": {}
+    }
+}

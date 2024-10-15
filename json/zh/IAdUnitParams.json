@@ -1,0 +1,79 @@
+{
+    "IAdUnitParams": {
+        "properties": {
+            "el": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "要附加广告单元的元素，可以是 HTMLElement 或字符串选择器。应该是广告单元的父元素（<ins> 标签）。"
+                        }
+                    ]
+                }
+            },
+            "slot": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "(OPTIONAL) 保留供将来使用。广告单元的槽名称，目前我们建议使用 position 作为槽名称。应设置 position 或 slot 之一。"
+                        }
+                    ]
+                }
+            },
+            "position": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "(OPTIONAL) The position of the ad unit. Can be 'TOP', 'BOTTOM', 'LEFT', 'RIGHT', 'CENTER'. Default is 'TOP'. Either position or slot should be set."
+                        }
+                    ]
+                }
+            },
+            "adFormat": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "(OPTIONAL) Ad format for the ad unit. Can be 'auto' or a single format or an array of formats. Default is 'auto'. If passed as an array, the array will be joined by ', ' and pass to the data-ad-format attribute."
+                        }
+                    ]
+                }
+            },
+            "fullWidthResponsive": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "(OPTIONAL) Whether the ad unit should be full width and responsive. Default is false."
+                        }
+                    ]
+                }
+            },
+            "style": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "(OPTIONAL) Custom style for the ad unit. Default is empty."
+                        }
+                    ]
+                }
+            }
+        },
+        "methods": {}
+    }
+}

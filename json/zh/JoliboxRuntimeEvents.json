@@ -1,0 +1,42 @@
+{
+    "JoliboxRuntimeEvents": {
+        "members": {
+            "LOAD_START": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "Event dispatched when the loading starts"
+                        }
+                    ]
+                }
+            },
+            "LOAD_FINISHED": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "Event dispatched when the loading is finished"
+                        }
+                    ]
+                }
+            },
+            "LOAD_PROGRESS": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "Event dispatched when the loading progress is updated"
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

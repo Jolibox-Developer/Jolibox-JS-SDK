@@ -1,0 +1,57 @@
+{
+    "IAdConfigParams": {
+        "properties": {
+            "preloadAdBreaks": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "(OPTIONAL) Whether ads should always be preloaded before the first call to adBreak()\n\nThe default value of auto leaves the decision up to the Ad Placement API. preloadAdBreaks can be set only once with adConfig(), and further values passed to preloadAdBreaks have no effect.\n\nSetting preloadAdBreaks after the first call to adBreak() has no effect."
+                        }
+                    ]
+                }
+            },
+            "sound": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "(OPTIONAL) Whether the game is currently playing sound.\n\nThis call specifies whether your game is capable of sound, and whether the sound was enabled (ie unmuted) before the call to adBreak(). This helps the Ad Placement API to select the right kind of ad for your game.\n\nCall this function as soon as the sound state of your game changes, as the Ad Placement API may have to request new creatives, and this gives it the maximum amount of time to do so.\n\nThe default value is sound on. So most games will need to make a call to adConfig() when they start to declare that they have sound enabled."
+                        }
+                    ]
+                }
+            },
+            "onReady": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "(OPTIONAL) Called when the API has initialized and has finished preloading ads (if you requested preloading using the preloadAdBreaks above)."
+                        }
+                    ]
+                }
+            }
+        },
+        "methods": {
+            "__type": {
+                "comment": {
+                    "blockTags": [
+                        {
+                            "skipRendering": false,
+                            "tag": "@returns",
+                            "content": []
+                        }
+                    ],
+                    "modifierTags": {},
+                    "summary": []
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,53 @@
+{
+    "IPlacementInfo": {
+        "comment": {
+            "blockTags": [],
+            "modifierTags": {},
+            "summary": [
+                {
+                    "kind": "text",
+                    "text": "PlacementInfo object passed by **adBreakDone** function"
+                }
+            ]
+        },
+        "properties": {
+            "breakType": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "the type argument passed to adBreak()"
+                        }
+                    ]
+                }
+            },
+            "breakName": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "the name argument passed to adBreak()"
+                        }
+                    ]
+                }
+            },
+            "breakStatus": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "the status of this placement and can be one of the following values:\n\n| breakStatus | Reason |\n| -------- | ------- |\n| 'notReady'\t| The Ad Placement API had not initialised |\n| 'timeout' | A placement timed out because the Ad Placement API took too long to respond |\n| 'invalid' | The placement was invalid and was ignored–for instance there should only be one preroll placement per page load, subsequent prerolls are failed with this status |\n| 'error' | There was a JavaScript error in a callback |\n| 'noAdPreloaded' |\tAn ad had not been preloaded yet so this placement was skipped |\n| 'frequencyCapped' |\tAn ad wasn't shown because the frequency cap was applied to this placement |\n| 'ignored' |\tThe user didn't click on a reward prompt before they reached the next placement, that is showAdFn() wasn't called before the next adBreak(). |\n| 'other' |\tThe ad was not shown for another reason. (e.g., The ad was still being fetched, or a previously cached ad was disposed because the screen was resized/rotated.) |\n| 'dismissed' |\tThe user dismissed a rewarded ad before viewing it to completion |\n| 'viewed' |\tThe ad was viewed by the user |"
+                        }
+                    ]
+                }
+            }
+        },
+        "methods": {}
+    }
+}

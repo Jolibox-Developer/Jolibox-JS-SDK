@@ -9,14 +9,16 @@
   },
   "type": "module",
   "scripts": {
-    "typedoc": "pnpm typedoc:ads && pnpm typedoc:runtime && typedoc",
+    "typedoc:i18n": "pnpm typedoc:ads-i18n && pnpm typedoc:runtime-i18n",
+    "typedoc:en": "DOC_LANG=en pnpm typedoc --generate-from-json json/en --lang en --readme README.md",
+    "typedoc:zh_cn": "DOC_LANG=zh_cn pnpm typedoc --generate-from-json json/zh --lang zh --readme README-zh_cn.md",
     "serve:doc": "pnpm typedoc && serve docs",
     "dev:test-vite": "pnpm --filter @jolibox/test run dev",
     "build:internal": "pnpm --filter @jolibox/internal run build",
     "build:runtime": "pnpm --filter @jolibox/runtime run build",
     "build:ads": "pnpm --filter @jolibox/ads-sdk run build",
-    "typedoc:ads": "pnpm --filter @jolibox/ads-sdk run typedoc",
-    "typedoc:runtime": "pnpm --filter @jolibox/runtime run typedoc",
+    "typedoc:ads-i18n": "pnpm --filter @jolibox/ads-sdk run typedoc:i18n",
+    "typedoc:runtime-i18n": "pnpm --filter @jolibox/runtime run typedoc:i18n",
     "build:test-vite": "pnpm --filter @jolibox/test run build:vite",
     "update:version": "pnpm version $(cat package.json | jq -r .version) -ws --no-workspaces-update --allow-same-version",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -33,7 +35,8 @@
     "serve": "^14.2.3",
     "tsup": "^8.3.0",
     "tsx": "^4.19.1",
-    "typedoc": "^0.26.7",
+    "typedoc": "^0.26.9",
+    "typedoc-plugin-localization": "^3.0.5",
     "typescript": "^5.6.2"
   },
   "workspaces": [

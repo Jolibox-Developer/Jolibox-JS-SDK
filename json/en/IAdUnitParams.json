@@ -1,0 +1,79 @@
+{
+    "IAdUnitParams": {
+        "properties": {
+            "el": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "The element to attach the ad unit to, either an HTMLElement or a string selector. Should be the parent element of the ad unit (<ins> tag)."
+                        }
+                    ]
+                }
+            },
+            "slot": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "(OPTIONAL) Reserved for future usage. The slot name of the ad unit, currently we suggest using position as the slot name. Either position or slot should be set."
+                        }
+                    ]
+                }
+            },
+            "position": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "(OPTIONAL) The position of the ad unit. Can be 'TOP', 'BOTTOM', 'LEFT', 'RIGHT', 'CENTER'. Default is 'TOP'. Either position or slot should be set."
+                        }
+                    ]
+                }
+            },
+            "adFormat": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "(OPTIONAL) Ad format for the ad unit. Can be 'auto' or a single format or an array of formats. Default is 'auto'. If passed as an array, the array will be joined by ', ' and pass to the data-ad-format attribute."
+                        }
+                    ]
+                }
+            },
+            "fullWidthResponsive": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "(OPTIONAL) Whether the ad unit should be full width and responsive. Default is false."
+                        }
+                    ]
+                }
+            },
+            "style": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "(OPTIONAL) Custom style for the ad unit. Default is empty."
+                        }
+                    ]
+                }
+            }
+        },
+        "methods": {}
+    }
+}

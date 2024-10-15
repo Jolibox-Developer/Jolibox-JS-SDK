@@ -1,0 +1,55 @@
+{
+    "IPrerollParams": {
+        "comment": {
+            "blockTags": [],
+            "modifierTags": {},
+            "summary": [
+                {
+                    "kind": "text",
+                    "text": "Parameter when calling preroll type adBreak"
+                }
+            ]
+        },
+        "properties": {
+            "type": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "'preroll' before the game loads (before UI has rendered)"
+                        }
+                    ]
+                }
+            },
+            "adBreakDone": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "(OPTIONAL) Always called as the last step in an adBreak(), even if there was no ad shown. Function takes as argument a placementInfo object"
+                        }
+                    ]
+                }
+            }
+        },
+        "methods": {
+            "__type": {
+                "comment": {
+                    "blockTags": [
+                        {
+                            "skipRendering": false,
+                            "tag": "@returns",
+                            "content": []
+                        }
+                    ],
+                    "modifierTags": {},
+                    "summary": []
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,57 @@
+{
+    "IAdConfigParams": {
+        "properties": {
+            "preloadAdBreaks": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "（可选）是否应在首次调用 adBreak() 之前始终预加载广告。\n\n默认值 auto 将决定权交给广告投放 API。preloadAdBreaks 只能通过 adConfig() 设置一次，之后传递给 preloadAdBreaks 的值将不起作用。\n\n在首次调用 adBreak() 之后设置 preloadAdBreaks 将不起作用。"
+                        }
+                    ]
+                }
+            },
+            "sound": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "（可选）游戏当前是否正在播放声音。\n\n此调用指定您的游戏是否具有声音功能，以及在调用 adBreak() 之前声音是否已启用（即未静音）。这有助于广告投放 API 为您的游戏选择合适的广告类型。\n\n当游戏的声音状态发生变化时，请立即调用此函数，因为广告投放 API 可能需要请求新的创意，这样可以为其提供尽可能多的时间来处理。\n\n默认值是声音开启。因此，大多数游戏在启动时需要调用 adConfig() 来声明它们已启用声音。"
+                        }
+                    ]
+                }
+            },
+            "onReady": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "（可选）当 API 初始化并完成广告预加载（如果您使用上面的 preloadAdBreaks 请求预加载）时调用。"
+                        }
+                    ]
+                }
+            }
+        },
+        "methods": {
+            "__type": {
+                "comment": {
+                    "blockTags": [
+                        {
+                            "skipRendering": false,
+                            "tag": "@returns",
+                            "content": []
+                        }
+                    ],
+                    "modifierTags": {},
+                    "summary": []
+                }
+            }
+        }
+    }
+}
