@@ -8,6 +8,22 @@ Most functions are strictly follow Ad Placement API design. You can read Google'
 
 ## Installation
 
+### Via CDN
+
+If you want to use the library via CDN, you add the following script tag to your HTML file.
+
+In such case, you should not write the import statement in your JavaScript file.
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/@jolibox/ads-sdk@0.0.7/dist/index.iife.js"></script>
+```
+
+### Via NPM
+
+If you want to use the library via NPM, you can install it via the following command:
+
+In such case, you should not include the script tag in your HTML file but write the import statement in your JavaScript file.
+
 - npm
 
   ```bash
@@ -31,7 +47,8 @@ Most functions are strictly follow Ad Placement API design. You can read Google'
 - Initialization
 
   ```typescript
-  import { JoliboxAds } from "@jolibox/ads-sdk";
+  // If you are importing the library via NPM, you can use the following import statement
+  // import { JoliboxAds } from "@jolibox/ads-sdk";
 
   const ads = new JoliboxAds({ testMode: true });
 

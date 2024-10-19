@@ -10,10 +10,16 @@ Most functions are strictly follow Ad Placement API design. You can read Google'
 
 **The current version is still in pre-release, so the API may change in the future.**
 
-- Install the SDK
+- Install the SDK via NPM
 
   ```bash
   npm install @jolibox/ads
+  ```
+
+- Alternatively, you can use the library via CDN
+
+  ```html
+  <script src="https://cdn.jsdelivr.net/npm/@jolibox/ads-sdk@0.0.7/dist/index.iife.js"></script>
   ```
 
 - Documentation

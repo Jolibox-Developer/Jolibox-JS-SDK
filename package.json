@@ -1,6 +1,6 @@
 {
   "name": "@jolibox/jolibox-js-sdk",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Jolibox JavaScript SDK",
   "homepage": "https://sdk-docs.jolibox.com",
   "repository": {
@@ -12,7 +12,7 @@
     "typedoc:i18n": "pnpm typedoc:ads-i18n && pnpm typedoc:runtime-i18n",
     "typedoc:en": "DOC_LANG=en pnpm typedoc --generate-from-json json/en --lang en --readme README.md",
     "typedoc:zh_cn": "DOC_LANG=zh_cn pnpm typedoc --generate-from-json json/zh --lang zh --readme README-zh_cn.md",
-    "serve:doc": "pnpm typedoc && serve docs",
+    "serve:doc": "serve docs",
     "dev:test-vite": "pnpm --filter @jolibox/test run dev",
     "build:internal": "pnpm --filter @jolibox/internal run build",
     "build:runtime": "pnpm --filter @jolibox/runtime run build",

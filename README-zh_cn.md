@@ -10,10 +10,16 @@ Jolibox SDK 模块使您可以通过广告赚钱。目前版本我们简单地�
 
 **当前版本仍处于预发布阶段，因此 API 可能会在未来发生变化。**
 
-- 安装 SDK
+- 通过 NPM 安装 SDK
 
   ```bash
   npm install @jolibox/ads
+  ```
+
+- 或者，您可以通过 CDN 使用库
+
+  ```html
+  <script src="https://cdn.jsdelivr.net/npm/@jolibox/ads-sdk@0.0.7/dist/index.iife.js"></script>
   ```
 
 - 文档

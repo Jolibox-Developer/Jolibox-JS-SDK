@@ -7,7 +7,17 @@ export default defineConfig({
   clean: true,
   outDir: "dist",
   target: "es6",
-  format: ["cjs", "esm"],
+  format: ["cjs", "esm", "iife"],
+  outExtension(ctx) {
+    switch (ctx.format) {
+      case "cjs":
+        return { js: ".cjs", dts: ".cts" };
+      case "esm":
+        return { js: ".js", dts: ".ts" };
+      default:
+        return { js: ".iife.js" };
+    }
+  },
   minify: true,
   dts: true,
 });

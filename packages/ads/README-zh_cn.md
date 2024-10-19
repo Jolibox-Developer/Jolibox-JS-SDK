@@ -8,6 +8,22 @@ Jolibox SDK 模块使您可以通过广告赚钱。在当前版本中，我们�
 
 ## 安装
 
+### 通过 CDN 引入
+
+如果你想通过 CDN 使用该库，可以在你的 HTML 文件中添加以下脚本标签。
+
+在这种情况下，你不应该在你的 JavaScript 文件中编写 import 语句。
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/@jolibox/ads-sdk@0.0.7/dist/index.iife.js"></script>
+```
+
+### 通过 NPM 安装
+
+如果你想通过 NPM 使用该库，可以通过以下命令安装它：
+
+在这种情况下，你不应该在你的 HTML 文件中包含脚本标签，而是在你的 JavaScript 文件中编写 import 语句。
+
 - npm
 
   ```bash
@@ -31,7 +47,8 @@ Jolibox SDK 模块使您可以通过广告赚钱。在当前版本中，我们�
 - 初始化
 
   ```typescript
-  import { JoliboxAds } from "@jolibox/ads-sdk";
+  // 如果你通过 NPM 导入库，你可以使用以下 import 语句
+  // import { JoliboxAds } from "@jolibox/ads-sdk";
 
   const ads = new JoliboxAds({ testMode: true });
 

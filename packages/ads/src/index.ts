@@ -1,6 +1,7 @@
 declare global {
   interface Window {
     adsbygoogle: Array<unknown>;
+    JoliboxAds: typeof JoliboxAds;
   }
 }
 
@@ -479,6 +480,10 @@ export class JoliboxAds {
     el.appendChild(ins);
     this.push({});
   };
+}
+
+if (typeof window !== "undefined" && !window.JoliboxAds) {
+  window.JoliboxAds = JoliboxAds;
 }
 
 export default JoliboxAds;
