@@ -6,7 +6,6 @@ declare global {
   }
 }
 
-const version = window.__JOLIBOX_LOCAL_SDK_VERSION__;
 const joliboxLoaderKey = "jolibox-sdk-loader-metadata";
 
 export interface IVersionMetadata {
@@ -44,15 +43,21 @@ export class JoliboxSDKLoader {
       : "https://api.jolibox.com";
   }
 
+  private get currentVersion() {
+    return window.__JOLIBOX_LOCAL_SDK_VERSION__;
+  }
+
   private get defaultMetadata(): IVersionMetadata {
+    const version = this.currentVersion;
     return {
       version,
-      syncScriptUrl: `https://cdn.jsdelivr.net/npm/@jolibox/web-sync-sdk@${version}/dist/index.iife.js`,
+      // syncScriptUrl: `https://cdn.jsdelivr.net/npm/@jolibox/web-sync-sdk@${version}/dist/index.iife.js`,
       asyncScriptUrl: `https://cdn.jsdelivr.net/npm/@jolibox/web-async-sdk@${version}/dist/index.iife.js`,
     };
   }
 
   computeLoaderMetaData() {
+    const version = this.currentVersion;
     let loaderMetadata: IVersionMetadata | null = null;
     try {
       loaderMetadata = JSON.parse(
@@ -96,7 +101,7 @@ export class JoliboxSDKLoader {
   };
 
   fetchUpdateLoaderMetadata = async (
-    installedSDKVersion = version,
+    installedSDKVersion = this.currentVersion,
     localSDKVersion = this.loaderMetadata.version,
     env = window.JOLIBOX_ENV ?? "WEB"
   ) => {

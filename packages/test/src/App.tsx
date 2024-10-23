@@ -4,11 +4,11 @@ import { useEffect } from "react";
 const jolibox = new JoliboxSDK({
   loaderConfig: {
     testMode: true,
-    loaderMetadata: {
-      version: "1.0.0",
-      syncScriptUrl: "http://localhost:3000/index.iife.js",
-      asyncScriptUrl: "http://localhost:3000/index.iife.js",
-    },
+    // loaderMetadata: {
+    //   version: "1.0.0",
+    //   syncScriptUrl: "http://localhost:3000/index.iife.js",
+    //   asyncScriptUrl: "http://localhost:3000/index.iife.js",
+    // },
   },
 });
 
