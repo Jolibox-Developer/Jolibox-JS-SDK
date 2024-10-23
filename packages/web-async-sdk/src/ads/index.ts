@@ -255,7 +255,7 @@ interface IJoliboxAdsResponse {
 /**
  * Jolibox Ads SDK
  */
-export class JoliboxAds {
+export class JoliboxAdsImpl {
   private configured = false;
   public config: IAdsInitParams = {};
   public clientId?: string;
@@ -484,4 +484,4 @@ export class JoliboxAds {
   };
 }
 
-export default JoliboxAds;
+export default JoliboxAdsImpl;
