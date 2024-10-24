@@ -31,7 +31,11 @@ importers:
 
   packages/runtime: {}
 
-  packages/sdk: {}
+  packages/sdk:
+    dependencies:
+      '@jolibox/web-sync-sdk':
+        specifier: workspace:*
+        version: link:../web-sync-sdk
 
   packages/test:
     dependencies:
@@ -59,6 +63,8 @@ importers:
         version: 5.4.8
 
   packages/web-async-sdk: {}
+
+  packages/web-sync-sdk: {}
 
 packages:
 

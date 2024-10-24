@@ -1,5 +1,13 @@
-import { JoliboxSDKLoader, type IJoliboxSDKLoaderConfig } from "./loader";
-import { JoliboxAds } from "./ads";
+import "./loader";
+import "./ads";
+import "@jolibox/web-sync-sdk";
+import type { JoliboxSDKLoader, IJoliboxSDKLoaderConfig } from "./loader";
+import type { JoliboxAds } from "./ads";
+import type { JoliboxRuntime } from "@jolibox/web-sync-sdk";
+
+export type { IJoliboxSDKLoaderConfig, IVersionMetadata } from "./loader";
+export type * from "./ads";
+export type * from "@jolibox/web-sync-sdk";
 
 declare global {
   interface Window {
@@ -16,7 +24,7 @@ declare global {
 
 window.__JOLIBOX_LOCAL_SDK_VERSION__ = import.meta.env.JOLIBOX_SDK_VERSION;
 
-interface IJoliboxConfig {
+export interface IJoliboxConfig {
   useRuntimeSDK?: boolean;
   loaderConfig?: IJoliboxSDKLoaderConfig;
 }
@@ -27,17 +35,28 @@ interface ICommandPipe {
 }
 
 class JoliboxSDK {
+  private loader: JoliboxSDKLoader;
   ads: JoliboxAds;
-  loader: JoliboxSDKLoader;
+  runtime: JoliboxRuntime;
 
   constructor({ useRuntimeSDK = true, loaderConfig }: IJoliboxConfig = {}) {
     if (useRuntimeSDK && window.joliboxsdk) {
-      this.loader = window.joliboxsdk.loader;
-      this.ads = window.joliboxsdk.ads;
+      this.loader =
+        window.joliboxsdk.loader ?? new window.JoliboxSDKLoader(loaderConfig);
+      this.ads = window.joliboxsdk.ads ?? new window.JoliboxAds();
+      this.runtime = window.joliboxsdk.runtime ?? new window.JoliboxRuntime();
     } else {
-      this.loader = new JoliboxSDKLoader(loaderConfig);
-      this.ads = new JoliboxAds();
-      window.joliboxsdk = Object.assign(this, { _commandPipe: [] });
+      this.loader = new window.JoliboxSDKLoader(loaderConfig);
+      this.ads = new window.JoliboxAds();
+      this.runtime = new window.JoliboxRuntime();
+      window.joliboxsdk = Object.assign(
+        this,
+        { _commandPipe: [] },
+        window.joliboxsdk
+      );
+    }
+    if (!window.joliboxsdk._commandPipe) {
+      window.joliboxsdk._commandPipe = [];
     }
   }
 }

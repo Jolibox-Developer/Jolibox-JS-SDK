@@ -3,6 +3,7 @@ import { major, compare } from "./utils";
 declare global {
   interface Window {
     JOLIBOX_ENV: "WEB" | "IOS" | "ANDROID" | "WINDOWS" | "MACOS" | "LINUX";
+    JoliboxSDKLoader: typeof JoliboxSDKLoader;
   }
 }
 
@@ -10,11 +11,11 @@ const joliboxLoaderKey = "jolibox-sdk-loader-metadata";
 
 export interface IVersionMetadata {
   version: string;
-  syncScriptUrl?: string;
+  syncScriptUrl?: string; // By default, the sync script is bundled with the sdk
   asyncScriptUrl?: string;
 }
 
-interface IRemoteVersionMetadata {
+export interface IRemoteVersionMetadata {
   code: "SUCCESS" | string;
   message?: string;
   data?: IVersionMetadata;
@@ -35,6 +36,7 @@ export class JoliboxSDKLoader {
     this.loaderMetadata = loaderMetadata ?? this.computeLoaderMetaData();
     this.loadScript();
     this.fetchUpdateLoaderMetadata();
+    console.log("Jolibox SDK loaded.");
   }
 
   private get apiBaseURL() {
@@ -51,12 +53,11 @@ export class JoliboxSDKLoader {
     const version = this.currentVersion;
     return {
       version,
-      // syncScriptUrl: `https://cdn.jsdelivr.net/npm/@jolibox/web-sync-sdk@${version}/dist/index.iife.js`,
       asyncScriptUrl: `https://cdn.jsdelivr.net/npm/@jolibox/web-async-sdk@${version}/dist/index.iife.js`,
     };
   }
 
-  computeLoaderMetaData() {
+  computeLoaderMetaData = () => {
     const version = this.currentVersion;
     let loaderMetadata: IVersionMetadata | null = null;
     try {
@@ -83,13 +84,15 @@ export class JoliboxSDKLoader {
     }
 
     return loaderMetadata;
-  }
+  };
 
   loadScript = () => {
     if (this.loaderMetadata.syncScriptUrl) {
-      const script = document.createElement("script");
-      script.src = this.loaderMetadata.syncScriptUrl;
-      document.head.appendChild(script);
+      // The only way to load a script synchronously is to use XMLHttpRequest
+      const xhr = new XMLHttpRequest();
+      xhr.open("GET", this.loaderMetadata.syncScriptUrl, false);
+      xhr.send();
+      eval(xhr.responseText);
     }
 
     if (this.loaderMetadata.asyncScriptUrl) {
@@ -134,3 +137,5 @@ export class JoliboxSDKLoader {
     }
   };
 }
+
+window.JoliboxSDKLoader = JoliboxSDKLoader;

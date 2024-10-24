@@ -1,3 +1,9 @@
+declare global {
+  interface Window {
+    JoliboxAds: typeof JoliboxAds;
+  }
+}
+
 export interface IAdsInitParams {
   /**
    * (OPTIONAL) Enable "data-adbreak-test" attributes, default false
@@ -320,5 +326,7 @@ export class JoliboxAds {
     });
   };
 }
+
+window.JoliboxAds = JoliboxAds;
 
 export default JoliboxAds;

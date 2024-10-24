@@ -1,13 +1,7 @@
 {
-  "name": "@jolibox/sdk",
+  "name": "@jolibox/web-sync-sdk",
   "version": "0.0.7",
-  "description": "Jolibox JavaScript SDK for Ads",
-  "homepage": "https://sdk-docs.jolibox.com",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com:Jolibox-Developer/Jolibox-JS-SDK.git",
-    "directory": "packages/ads"
-  },
+  "description": "",
   "main": "dist/index.cjs",
   "type": "module",
   "module": "dist/index.js",
@@ -18,22 +12,14 @@
     "typedoc:i18n": "typedoc --plugin typedoc-plugin-localization --generate-json ../../json/en",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [
-    "jolibox",
-    "minigame",
-    "sdk",
-    "ads"
-  ],
-  "author": "Jolibox",
-  "license": "MIT",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     }
-  },
-  "dependencies": {
-    "@jolibox/web-sync-sdk": "workspace:*"
   }
 }
