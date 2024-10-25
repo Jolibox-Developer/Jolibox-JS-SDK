@@ -267,13 +267,13 @@ export class JoliboxAdsImpl {
    * @param config
    * @returns
    */
-  public init(config: IAdsInitParams) {
+  public init(config?: IAdsInitParams) {
     if (typeof window === "undefined") {
       // skip if not in browser
       return;
     }
 
-    this.config = config;
+    this.config = config ?? {};
     window.adsbygoogle = window.adsbygoogle || [];
     this.asyncInit(config);
   }
@@ -314,7 +314,7 @@ export class JoliboxAdsImpl {
    * @param config
    * @returns
    */
-  private asyncInit = async (config: IAdsInitParams) => {
+  private asyncInit = async (config?: IAdsInitParams) => {
     if (typeof window === "undefined") {
       // skip if not in browser
       return;

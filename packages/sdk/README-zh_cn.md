@@ -48,15 +48,11 @@ Jolibox SDK 是一个 JavaScript 库，提供了一种简单的方法来集成 J
   // 如果你通过 NPM 导入库，你可以使用以下 import 语句
   // import { JoliboxSDK } from "@jolibox/sdk";
 
-  const jolibox = new JoliboxSDK({
-    loaderConfig: {
-      testMode: true,
-    },
-  });
+  const jolibox = new JoliboxSDK();
 
   // 例如，如果你想使用广告服务
   const { ads } = jolibox;
-  ads.init({ testMode: true });
+  ads.init();
 
   // 在需要预加载广告的地方（例如在游戏加载屏幕中）
   ads.adConfig({

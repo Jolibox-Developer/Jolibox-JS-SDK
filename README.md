@@ -48,15 +48,11 @@ In such case, you should not include the script tag in your HTML file but write 
   // If you are importing the library via NPM, you can use the following import statement
   // import { JoliboxSDK } from "@jolibox/sdk";
 
-  const jolibox = new JoliboxSDK({
-    loaderConfig: {
-      testMode: true,
-    },
-  });
+  const jolibox = new JoliboxSDK();
 
   // For example, if you want to use the Ads service
   const { ads } = jolibox;
-  ads.init({ testMode: true });
+  ads.init();
 
   // somewhere when you need to preload ads (e.g. in the game loading screen)
   ads.adConfig({

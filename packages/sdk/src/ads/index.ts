@@ -251,7 +251,7 @@ export class JoliboxAds {
    * @param config
    * @returns
    */
-  public init = (config: IAdsInitParams) => {
+  public init = (config?: IAdsInitParams) => {
     window.joliboxsdk._commandPipe.push({
       cmd: "ads.init",
       params: config,
