@@ -13,7 +13,7 @@ If you want to use the library via CDN, you add the following script tag to your
 In such case, you should not write the import statement in your JavaScript file.
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@jolibox/sdk@0.0.8/dist/index.iife.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@jolibox/sdk@1/dist/index.iife.js"></script>
 ```
 
 ### Via NPM
