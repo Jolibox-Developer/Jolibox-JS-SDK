@@ -5,8 +5,10 @@ const readme =
 const config = {
   readme,
   projectDocuments: [readme],
-  entryPoints: ["src/index.ts"],
+  entryPoints: ["src/**/index.ts", "src/**/index.d.ts"],
+  excludePrivate: true,
   entryPointStrategy: "expand",
+  alwaysCreateEntryPointModule: true,
   cacheBust: true,
   headings: {
     readme: true,

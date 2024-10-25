@@ -1,0 +1,86 @@
+{
+    "JoliboxAds": {
+        "comment": {
+            "blockTags": [],
+            "modifierTags": {},
+            "summary": [
+                {
+                    "kind": "text",
+                    "text": "Jolibox Ads SDK"
+                }
+            ]
+        },
+        "properties": {},
+        "methods": {
+            "init": {
+                "comment": {
+                    "blockTags": [
+                        {
+                            "skipRendering": false,
+                            "tag": "@returns",
+                            "content": []
+                        }
+                    ],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "Init JoliboxAds. Must be called before any other ads functions."
+                        }
+                    ]
+                }
+            },
+            "adConfig": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "The adConfig() call communicates the game's current configuration to the Ad Placement API. The Ad Placement API can use this to tune the way it preloads ads and to filter the kinds of ads it requests so they're suitable (eg. video ads that require sound)."
+                        }
+                    ]
+                }
+            },
+            "adBreak": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "adBreak() is the key function for placing ads within your game. It defines an ad placement and takes an object called a placement config that specifies everything required to show an ad.\n\nThe adBreak() function defines a placement where an ad could be shown. Whether an ad actually shows depends on factors such as the following:\n\n- The type of ad placement that you declared\n  - Is this ad at the start of the game? Between levels? At a moment when the player has paused the game?\n- Whether a suitable ad exists for the current player\n  - Is this ad relevant to them?\n  - Is it consistent with their data privacy and consent settings?\n- The number of ads the player has seen recently\n- The control settings—for example, ad frequency, you've configured for this game\n  - Either as hints in the tag, or,\n  - Within AdSense—note that the controls available in AdSense will evolve over time.\n\nThe kind of ad that shows also depends on similar factors.\n\nNote that a call to adBreak() might not show an ad at all. It simply declares a place where an ad could be shown.\n\nThis is unlike traditional APIs in which your code always knows if an ad is available, and you decide within the game whether to show it. This approach of letting the Ad Placement API decide if an ad shows in a particular placement is a pattern that is sometimes referred to as \"inversion of control\".\n\nThe reason we're transitioning our games API to this model is firstly, it shortens the code you have to write within your game. Secondly, it makes it easier to deliver policy compliant placements with a great user experience, which in turn has allowed us to deliver some of our highest performing formats to games publishers. Lastly, it more cleanly separates the process of placing ads in your game from the monetization decisions about the type and number of ads to show.\n\nWe want you to be able to change your monetization settings and control the user experience without having to edit and release a new version of your game, initially by specifying hints in the tag. But in future releases, we will be able to provide controls directly in the AdSense and AdMob frontends."
+                        }
+                    ]
+                }
+            },
+            "adUnit": {
+                "comment": {
+                    "blockTags": [
+                        {
+                            "skipRendering": false,
+                            "tag": "@returns",
+                            "content": []
+                        }
+                    ],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "adUnit() is a function that creates an ad unit and attaches it to a parent element. The ad unit is a single ad placement that can be used to show ads.\n\nCurrently we only provide support for creating ad units as "
+                        },
+                        {
+                            "kind": "code",
+                            "text": "`<ins>`"
+                        },
+                        {
+                            "kind": "text",
+                            "text": " tags with the class 'adsbygoogle'. This is the standard way to create ad units with Google AdSense.\n\nAfter calling this method, the ad unit is attached to the parent element you specify as el in the params object.\n\nBy default, the client ID and channel ID are automatically set by the SDK. And the slot name is set to the position of the ad unit. You can override these values by passing the slot and channelId in the params object."
+                        }
+                    ]
+                }
+            }
+        },
+        "accessors": {}
+    }
+}

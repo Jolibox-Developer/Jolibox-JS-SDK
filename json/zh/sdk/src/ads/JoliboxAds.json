@@ -1,0 +1,86 @@
+{
+    "JoliboxAds": {
+        "comment": {
+            "blockTags": [],
+            "modifierTags": {},
+            "summary": [
+                {
+                    "kind": "text",
+                    "text": "Jolibox 广告 SDK"
+                }
+            ]
+        },
+        "properties": {},
+        "methods": {
+            "init": {
+                "comment": {
+                    "blockTags": [
+                        {
+                            "skipRendering": false,
+                            "tag": "@returns",
+                            "content": []
+                        }
+                    ],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "初始化 JoliboxAds。必须在调用其他广告功能之前调用。"
+                        }
+                    ]
+                }
+            },
+            "adConfig": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "adConfig() 调用向广告位置 API 传递游戏的当前配置。广告位置 API 可以利用这些信息调整广告预加载方式，并过滤请求的广告类型，以便符合游戏需求（例如需要声音的视频广告）。"
+                        }
+                    ]
+                }
+            },
+            "adBreak": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "adBreak() 是游戏中放置广告的关键函数。它定义了一个广告位置，并接受一个名为位置配置的对象，指定展示广告所需的所有内容。\n\nadBreak() 函数定义了一个广告可能展示的位置。是否真正展示广告取决于以下因素：\n\n- 您声明的广告位置类型\n  - 这个广告是在游戏开始时吗？关卡之间？还是玩家暂停游戏时？\n- 当前玩家是否有合适的广告\n  - 这个广告是否与他们相关？\n  - 它是否符合他们的数据隐私和同意设置？\n- 玩家最近观看广告的数量\n- 您为该游戏配置的控制设置，例如广告频率\n  - 在标签中作为提示，或者，\n  - 在 AdSense 中——请注意，AdSense 中的控制设置将随着时间而发展。\n\n显示的广告类型也取决于类似的因素。\n\n请注意，调用 adBreak() 可能不会展示广告。它只是声明了一个可能展示广告的位置。\n\n这与传统的 API 不同，在传统 API 中，您的代码总是知道是否有广告可用，并且您在游戏中决定是否展示广告。这种让广告位置 API 决定在特定位置是否展示广告的模式有时称为“控制反转”。\n\n我们将游戏 API 过渡到这种模式的原因首先是，它简化了您在游戏中编写的代码。其次，它更容易提供政策合规的广告位置并带来良好的用户体验，这也使我们能够向游戏发行商提供我们性能最高的格式之一。最后，它更清晰地将游戏中放置广告的过程与广告类型和数量的获利决策分开。\n\n我们希望您能够在不编辑和发布游戏新版本的情况下更改您的货币化设置和控制用户体验，最初通过在标签中指定提示。但在未来版本中，我们将能够在 AdSense 和 AdMob 前端直接提供控制。"
+                        }
+                    ]
+                }
+            },
+            "adUnit": {
+                "comment": {
+                    "blockTags": [
+                        {
+                            "skipRendering": false,
+                            "tag": "@returns",
+                            "content": []
+                        }
+                    ],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "adUnit() 是一个创建广告单元并将其附加到父元素的函数。广告单元是一个用于展示广告的单一广告位置。\n\n目前我们仅支持将广告单元创建为"
+                        },
+                        {
+                            "kind": "code",
+                            "text": "`<ins>`"
+                        },
+                        {
+                            "kind": "text",
+                            "text": "标签，类名为 'adsbygoogle'。这是使用 Google AdSense 创建广告单元的标准方式。\n\n调用此方法后，广告单元将附加到您在参数对象中指定的 el 父元素上。\n\n默认情况下，客户端 ID 和频道 ID 将由 SDK 自动设置。广告位名称将设置为广告单元的位置。您可以通过在参数对象中传递 slot 和 channelId 来覆盖这些值。"
+                        }
+                    ]
+                }
+            }
+        },
+        "accessors": {}
+    }
+}

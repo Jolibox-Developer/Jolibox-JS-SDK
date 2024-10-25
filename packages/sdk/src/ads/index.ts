@@ -134,8 +134,8 @@ export interface IInterstitialsParams {
   beforeAd?: () => void;
 
   /**
-   *
-   * @returns (OPTIONAL) Called after the ad is finished (for any reason). For rewarded ads, it is called after either adDismissed or adViewed, depending on player actions. This function should be used to resume game flow. For example, use to unmute the sound and start the next level.
+   * (OPTIONAL) Called after the ad is finished (for any reason). For rewarded ads, it is called after either adDismissed or adViewed, depending on player actions. This function should be used to resume game flow. For example, use to unmute the sound and start the next level.
+   * @returns
    */
   afterAd?: () => void;
 

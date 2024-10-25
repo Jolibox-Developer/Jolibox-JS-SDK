@@ -3,11 +3,7 @@ import "./ads";
 import "@jolibox/web-sync-sdk";
 import type { JoliboxSDKLoader, IJoliboxSDKLoaderConfig } from "./loader";
 import type { JoliboxAds } from "./ads";
-import type { JoliboxRuntime } from "@jolibox/web-sync-sdk";
-
-export type { IJoliboxSDKLoaderConfig, IVersionMetadata } from "./loader";
-export type * from "./ads";
-export type * from "@jolibox/web-sync-sdk";
+import type { JoliboxRuntime } from "./runtime";
 
 declare global {
   interface Window {

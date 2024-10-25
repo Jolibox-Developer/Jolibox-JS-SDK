@@ -7,8 +7,7 @@ const out = process.env.DOC_LANG === "zh_cn" ? "docs/zh_cn" : "docs/en";
 const config = {
   readme: readme,
   projectDocuments: [readme],
-  entryPoints: ["packages/*"],
-  exclude: ["packages/test"],
+  entryPoints: ["packages/sdk"],
   entryPointStrategy: "packages",
   includeVersion: true,
   cacheBust: true,

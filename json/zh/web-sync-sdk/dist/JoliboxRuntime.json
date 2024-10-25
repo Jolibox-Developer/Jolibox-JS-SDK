@@ -1,0 +1,42 @@
+{
+    "JoliboxRuntime": {
+        "comment": {
+            "blockTags": [],
+            "modifierTags": {},
+            "summary": [
+                {
+                    "kind": "text",
+                    "text": "Jolibox 运行时，一组与 Jolibox 运行时交互的实用工具"
+                }
+            ]
+        },
+        "properties": {
+            "loadFinished": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "通知加载结束，将关闭加载启动画面"
+                        }
+                    ]
+                }
+            },
+            "notifyLoadProgress": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "通知加载进度，将更新加载启动画面"
+                        }
+                    ]
+                }
+            }
+        },
+        "methods": {},
+        "accessors": {}
+    }
+}

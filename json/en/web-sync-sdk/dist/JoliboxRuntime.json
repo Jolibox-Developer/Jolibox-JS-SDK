@@ -1,0 +1,42 @@
+{
+    "JoliboxRuntime": {
+        "comment": {
+            "blockTags": [],
+            "modifierTags": {},
+            "summary": [
+                {
+                    "kind": "text",
+                    "text": "Jolibox Runtime, a set of utilities to interact with the Jolibox runtime"
+                }
+            ]
+        },
+        "properties": {
+            "loadFinished": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "Notify the end of the loading, will close the loading splash screen"
+                        }
+                    ]
+                }
+            },
+            "notifyLoadProgress": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "Notify the progress of the loading, will update the loading splash screen"
+                        }
+                    ]
+                }
+            }
+        },
+        "methods": {},
+        "accessors": {}
+    }
+}

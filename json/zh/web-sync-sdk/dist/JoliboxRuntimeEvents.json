@@ -1,0 +1,42 @@
+{
+    "JoliboxRuntimeEvents": {
+        "members": {
+            "LOAD_START": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "加载开始时分派的事件"
+                        }
+                    ]
+                }
+            },
+            "LOAD_FINISHED": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "加载完成时分派的事件"
+                        }
+                    ]
+                }
+            },
+            "LOAD_PROGRESS": {
+                "comment": {
+                    "blockTags": [],
+                    "modifierTags": {},
+                    "summary": [
+                        {
+                            "kind": "text",
+                            "text": "加载进度更新时分派的事件"
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}
