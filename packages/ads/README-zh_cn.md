@@ -15,7 +15,7 @@ Jolibox SDK 模块使您可以通过广告赚钱。在当前版本中，我们�
 在这种情况下，你不应该在你的 JavaScript 文件中编写 import 语句。
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@jolibox/ads-sdk@0.0.7/dist/index.iife.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@jolibox/ads-sdk@0.0.8/dist/index.iife.js"></script>
 ```
 
 ### 通过 NPM 安装

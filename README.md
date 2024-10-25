@@ -19,7 +19,7 @@ Most functions are strictly follow Ad Placement API design. You can read Google'
 - Alternatively, you can use the library via CDN
 
   ```html
-  <script src="https://cdn.jsdelivr.net/npm/@jolibox/ads-sdk@0.0.7/dist/index.iife.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@jolibox/ads-sdk@0.0.8/dist/index.iife.js"></script>
   ```
 
 - Documentation
