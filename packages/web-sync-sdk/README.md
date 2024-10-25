@@ -1,5 +1,5 @@
-# Jolibox Runtime SDK 
+# Jolibox Web Sync SDK
 
 **Still work in progress, please do not use this SDK yet.**
 
-This is the Jolibox Runtime SDK. It is a a set of utilities to interact with the Jolibox runtime.
+This is part of the internal implementations of the Jolibox Web SDK and is intended to be loaded synchronously.

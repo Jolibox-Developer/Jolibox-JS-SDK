@@ -1,9 +1,15 @@
 import { JoliboxSDK } from "@jolibox/sdk";
 import { useEffect } from "react";
+import { version } from "../package.json";
 
 const jolibox = new JoliboxSDK({
   loaderConfig: {
     testMode: true,
+    loaderMetadata: {
+      version,
+      asyncScriptUrl: `https://cdn.jsdelivr.net/npm/@jolibox/web-async-sdk@${version}/dist/index.iife.js`,
+      syncScriptUrl: `https://cdn.jsdelivr.net/npm/@jolibox/web-sync-sdk@${version}/dist/index.iife.js`,
+    },
   },
 });
 

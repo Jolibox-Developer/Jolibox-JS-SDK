@@ -92,11 +92,16 @@ export class JoliboxSDKLoader {
       const xhr = new XMLHttpRequest();
       xhr.open("GET", this.loaderMetadata.syncScriptUrl, false);
       xhr.send();
-      eval(xhr.responseText);
+      // eval(xhr.responseText);
+      const script = document.createElement("script");
+      script.type = "text/javascript";
+      script.innerHTML = xhr.responseText;
+      document.head.appendChild(script);
     }
 
     if (this.loaderMetadata.asyncScriptUrl) {
       const asyncScript = document.createElement("script");
+      asyncScript.type = "text/javascript";
       asyncScript.src = this.loaderMetadata.asyncScriptUrl;
       asyncScript.async = true;
       document.head.appendChild(asyncScript);
