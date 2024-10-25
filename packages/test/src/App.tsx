@@ -1,12 +1,22 @@
-import JoliboxAds from "@jolibox/ads-sdk";
-import { useEffect, useMemo } from "react";
+import { JoliboxSDK } from "@jolibox/sdk";
+import { useEffect } from "react";
+import { version } from "../package.json";
+
+const jolibox = new JoliboxSDK({
+  loaderConfig: {
+    testMode: true,
+    loaderMetadata: {
+      version,
+      asyncScriptUrl: `https://cdn.jsdelivr.net/npm/@jolibox/web-async-sdk@${version}/dist/index.iife.js`,
+      syncScriptUrl: `https://cdn.jsdelivr.net/npm/@jolibox/web-sync-sdk@${version}/dist/index.iife.js`,
+    },
+  },
+});
+
+const { ads } = jolibox;
+ads.init({ testMode: true, gameId: "G31841342933817143317925877328" });
 
 export const App = () => {
-  const ads = useMemo(
-    () => new JoliboxAds({ testMode: true, gameId: "G31841342933817143317925877328" }),
-    []
-  );
-
   useEffect(() => {
     ads.adConfig({
       preloadAdBreaks: "on",

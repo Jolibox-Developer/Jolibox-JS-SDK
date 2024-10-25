@@ -1,6 +1,6 @@
 declare global {
   interface Window {
-    adsbygoogle: Array<unknown>;
+    JoliboxAds: typeof JoliboxAds;
   }
 }
 
@@ -242,116 +242,25 @@ export interface IAdUnitParams {
   style?: string;
 }
 
-interface IJoliboxAdsResponse {
-  code: "SUCCESS" | string;
-  message: "SUCCESS" | string;
-  data: {
-    channelId: string;
-    clientId: string;
-    unitId: string;
-  };
-}
-
 /**
  * Jolibox Ads SDK
  */
 export class JoliboxAds {
-  private configured = false;
-  public config: IAdsInitParams = {};
-  public clientId?: string;
-  public channelId?: string;
-  public unitId?: string;
-
   /**
    * Internal constructor, should not be called directly
    */
   constructor() {}
 
   /**
-   * Initialize the Ads SDK
+   * Init JoliboxAds. Must be called before any other ads functions.
    * @param config
    * @returns
    */
-  public init(config: IAdsInitParams) {
-    if (typeof window === "undefined") {
-      // skip if not in browser
-      return;
-    }
-
-    this.config = config;
-    window.adsbygoogle = window.adsbygoogle || [];
-    this.asyncInit(config);
-  }
-
-  private getGameId = () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get("gameId") ?? this.config.gameId;
-  };
-
-  private asyncLoad = async () => {
-    let clientId = "ca-pub-7171363994453626";
-    let channelId: string | undefined;
-    let unitId: string | undefined;
-    const baseUrl = this.config.testMode
-      ? "https://test-api.jolibox.com"
-      : "https://api.jolibox.com";
-
-    const objectId = window.encodeURIComponent(
-      window.btoa(this.getGameId() ?? "")
-    );
-    try {
-      const clientInfoResp = await fetch(
-        `${baseUrl}/public/ads?objectId=${objectId}`
-      );
-      const clientInfo: IJoliboxAdsResponse = await clientInfoResp.json();
-      clientId = clientInfo.data.clientId;
-      channelId = clientInfo.data.channelId;
-      unitId = clientInfo.data.unitId;
-    } catch (e) {
-      console.error("Failed to fetch client info", e);
-    }
-    this.clientId = clientId;
-    this.channelId = channelId;
-    this.unitId = unitId;
-  };
-
-  /**
-   * Internal function to load Google Adsense script in async
-   * @param config
-   * @returns
-   */
-  private asyncInit = async (config: IAdsInitParams) => {
-    if (typeof window === "undefined") {
-      // skip if not in browser
-      return;
-    }
-
-    await this.asyncLoad();
-
-    const gAdsenseDomId = "google-adsense";
-    const testMode = config.testMode || false;
-    if (!document.getElementById(gAdsenseDomId)) {
-      const script = document.createElement("script");
-      script.id = gAdsenseDomId;
-      script.async = true;
-      script.crossOrigin = "anonymous";
-      script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${this.clientId}`;
-      if (testMode) {
-        script.setAttribute("data-adbreak-test", "on");
-      }
-      if (this.channelId) {
-        script.setAttribute("data-ad-channel", this.channelId);
-      }
-      document.head.appendChild(script);
-    }
-  };
-
-  /**
-   * Internal function to push adsbygoogle array
-   * @param params
-   */
-  private push = (params: any = {}) => {
-    window.adsbygoogle.push(params);
+  public init = (config: IAdsInitParams) => {
+    window.joliboxsdk._commandPipe.push({
+      cmd: "ads.init",
+      params: config,
+    });
   };
 
   /**
@@ -359,12 +268,10 @@ export class JoliboxAds {
    * @param params
    */
   public adConfig = (params: IAdConfigParams) => {
-    if (!this.configured) {
-      this.configured = true;
-      this.push(params);
-    } else {
-      console.warn("Ad config already set, skipping");
-    }
+    window.joliboxsdk._commandPipe.push({
+      cmd: "ads.adConfig",
+      params,
+    });
   };
 
   /**
@@ -394,7 +301,10 @@ export class JoliboxAds {
    * @param params
    */
   public adBreak = (params: IAdBreakParams) => {
-    this.push(params);
+    window.joliboxsdk._commandPipe.push({
+      cmd: "ads.adBreak",
+      params,
+    });
   };
 
   /**
@@ -410,78 +320,13 @@ export class JoliboxAds {
    * @returns
    */
   public adUnit = async (params: IAdUnitParams) => {
-    if (!this.clientId) {
-      await this.asyncLoad();
-    }
-    if (document.querySelector("#joilbox-ads")) {
-      console.warn("Ad unit already set, skipping");
-      return;
-    }
-    const {
-      el: inputEl,
-      slot: inputSlot,
-      // position,
-      // channelId: inputChannelId,
-      adFormat: inputAdFormat,
-      fullWidthResponsive,
-      style,
-    } = params;
-
-    let el: HTMLElement | null;
-    if (!inputEl) {
-      throw new Error("targeting element is required");
-    }
-    if (typeof inputEl === "string") {
-      el = document.querySelector(inputEl);
-    } else {
-      el = inputEl;
-    }
-    if (!el) {
-      throw new Error("targeting element not found");
-    }
-
-    // if (!inputSlot && !position) {
-    //   throw new Error("either slot or position is required");
-    // }
-
-    let slot = inputSlot;
-    if (!slot) {
-      slot = this.unitId;
-    }
-    if (!slot) {
-      throw new Error("slot is required");
-    }
-    // let channelId = inputChannelId;
-    // if (!channelId) {
-    //   channelId = this.channelId;
-    // }
-
-    const adFormat =
-      (typeof inputAdFormat === "object"
-        ? inputAdFormat.join(", ")
-        : inputAdFormat) ?? "auto";
-
-    const ins = document.createElement("ins");
-    ins.className = "adsbygoogle";
-    ins.id = "jolibox-ads";
-    ins.style.display = "block";
-    ins.setAttribute("data-ad-client", this.clientId!);
-    ins.setAttribute("data-ad-slot", slot);
-    ins.setAttribute("data-ad-format", adFormat);
-
-    if (fullWidthResponsive) {
-      ins.setAttribute("data-full-width-responsive", fullWidthResponsive);
-    }
-    // if (channelId) {
-    //   ins.setAttribute("data-ad-channel", channelId);
-    // }
-    if (style) {
-      ins.setAttribute("style", style);
-    }
-
-    el.appendChild(ins);
-    this.push({});
+    window.joliboxsdk._commandPipe.push({
+      cmd: "ads.adUnit",
+      params,
+    });
   };
 }
+
+window.JoliboxAds = JoliboxAds;
 
 export default JoliboxAds;

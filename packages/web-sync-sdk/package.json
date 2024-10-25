@@ -1,0 +1,25 @@
+{
+  "name": "@jolibox/web-sync-sdk",
+  "version": "0.0.7",
+  "description": "",
+  "main": "dist/index.cjs",
+  "type": "module",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsup",
+    "typedoc": "typedoc",
+    "typedoc:i18n": "typedoc --plugin typedoc-plugin-localization --generate-json ../../json/en",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  }
+}

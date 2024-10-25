@@ -31,11 +31,17 @@ importers:
 
   packages/runtime: {}
 
+  packages/sdk:
+    dependencies:
+      '@jolibox/web-sync-sdk':
+        specifier: workspace:*
+        version: link:../web-sync-sdk
+
   packages/test:
     dependencies:
-      '@jolibox/ads-sdk':
+      '@jolibox/sdk':
         specifier: workspace:*
-        version: link:../ads
+        version: link:../sdk
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -55,6 +61,10 @@ importers:
       vite:
         specifier: ^5.4.7
         version: 5.4.8
+
+  packages/web-async-sdk: {}
+
+  packages/web-sync-sdk: {}
 
 packages:
 
