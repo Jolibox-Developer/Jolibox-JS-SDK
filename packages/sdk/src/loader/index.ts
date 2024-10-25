@@ -22,27 +22,19 @@ export interface IRemoteVersionMetadata {
 }
 
 export interface IJoliboxSDKLoaderConfig {
-  testMode?: boolean;
   loaderMetadata?: IVersionMetadata;
 }
 
 export class JoliboxSDKLoader {
   loaderMetadata: IVersionMetadata;
-  testMode = false;
 
-  constructor({ testMode, loaderMetadata }: IJoliboxSDKLoaderConfig = {}) {
+  constructor({ loaderMetadata }: IJoliboxSDKLoaderConfig = {}) {
     console.log("Loading Jolibox SDK...");
-    this.testMode = testMode ?? false;
+
     this.loaderMetadata = loaderMetadata ?? this.computeLoaderMetaData();
     this.loadScript();
     this.fetchUpdateLoaderMetadata();
     console.log("Jolibox SDK loaded.");
-  }
-
-  private get apiBaseURL() {
-    return this.testMode
-      ? "https://test-api.jolibox.com"
-      : "https://api.jolibox.com";
   }
 
   private get currentVersion() {
@@ -113,7 +105,9 @@ export class JoliboxSDKLoader {
     localSDKVersion = this.loaderMetadata.version,
     env = window.JOLIBOX_ENV ?? "WEB"
   ) => {
-    const path = `${this.apiBaseURL}/frontend/js-sdk/loader-metadata`;
+    const path = `${
+      window.joliboxenv?.apiBaseURL ?? "https://api.jolibox.com"
+    }/frontend/js-sdk/loader-metadata`;
     try {
       const response = await fetch(path, {
         method: "POST",

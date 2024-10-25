@@ -6,11 +6,6 @@ declare global {
 
 export interface IAdsInitParams {
   /**
-   * (OPTIONAL) Enable "data-adbreak-test" attributes, default false
-   */
-  testMode?: boolean;
-
-  /**
    * (OPTIONAL) Game ID provided by Jolibox
    */
   gameId?: string;
@@ -292,16 +287,15 @@ export class JoliboxAdsImpl {
     let clientId = "ca-pub-7171363994453626";
     let channelId: string | undefined;
     let unitId: string | undefined;
-    const baseUrl = this.config.testMode
-      ? "https://test-api.jolibox.com"
-      : "https://api.jolibox.com";
 
     const objectId = window.encodeURIComponent(
       window.btoa(this.getGameId() ?? "")
     );
     try {
       const clientInfoResp = await fetch(
-        `${baseUrl}/public/ads?objectId=${objectId}`
+        `${
+          window.joliboxenv?.apiBaseURL ?? "https://api.jolibox.com"
+        }/public/ads?objectId=${objectId}`
       );
       const clientInfo: IJoliboxAdsResponse = await clientInfoResp.json();
       clientId = clientInfo.data.clientId;
@@ -329,7 +323,7 @@ export class JoliboxAdsImpl {
     await this.asyncLoad();
 
     const gAdsenseDomId = "google-adsense";
-    const testMode = config.testMode || false;
+    const testMode = window.joliboxenv?.testMode ?? false;
     if (!document.getElementById(gAdsenseDomId)) {
       const script = document.createElement("script");
       script.id = gAdsenseDomId;

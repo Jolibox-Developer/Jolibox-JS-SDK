@@ -6,11 +6,6 @@ declare global {
 
 export interface IAdsInitParams {
   /**
-   * (OPTIONAL) Enable "data-adbreak-test" attributes, default false
-   */
-  testMode?: boolean;
-
-  /**
    * (OPTIONAL) Game ID provided by Jolibox
    */
   gameId?: string;

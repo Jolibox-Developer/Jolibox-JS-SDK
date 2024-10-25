@@ -8,6 +8,10 @@ import type { JoliboxRuntime } from "./runtime";
 declare global {
   interface Window {
     __JOLIBOX_LOCAL_SDK_VERSION__: string;
+    joliboxenv?: {
+      testMode: boolean;
+      apiBaseURL: string;
+    };
     joliboxsdk: JoliboxSDK & { _commandPipe: ICommandPipe[] };
     JoliboxSDK: typeof JoliboxSDK;
   }
@@ -23,6 +27,8 @@ window.__JOLIBOX_LOCAL_SDK_VERSION__ = import.meta.env.JOLIBOX_SDK_VERSION;
 export interface IJoliboxConfig {
   useRuntimeSDK?: boolean;
   loaderConfig?: IJoliboxSDKLoaderConfig;
+  testMode?: boolean;
+  apiBaseURL?: string;
 }
 
 interface ICommandPipe {
@@ -35,7 +41,38 @@ class JoliboxSDK {
   ads: JoliboxAds;
   runtime: JoliboxRuntime;
 
-  constructor({ useRuntimeSDK = true, loaderConfig }: IJoliboxConfig = {}) {
+  setJoliboxEnv = (inputTestMode?: boolean, inputApiBaseURL?: string) => {
+    const isBrowser = typeof window !== "undefined";
+    const urlSearchParams = isBrowser
+      ? new URLSearchParams(window.location.search)
+      : null;
+    const testModeParam = urlSearchParams?.get("testMode") === "true";
+    const testMode = inputTestMode ?? testModeParam;
+
+    const apiBaseURLParam = urlSearchParams?.get("apiBaseURL");
+    let apiBaseURL;
+    if (inputApiBaseURL) {
+      apiBaseURL = inputApiBaseURL;
+    } else if (apiBaseURLParam) {
+      apiBaseURL = apiBaseURLParam;
+    } else {
+      apiBaseURL = testMode
+        ? "https://test-api.jolibox.com"
+        : "https://api.jolibox.com";
+    }
+    window.joliboxenv = {
+      testMode,
+      apiBaseURL,
+    };
+  };
+
+  constructor({
+    useRuntimeSDK = true,
+    loaderConfig,
+    testMode,
+    apiBaseURL,
+  }: IJoliboxConfig = {}) {
+    this.setJoliboxEnv(testMode, apiBaseURL);
     if (useRuntimeSDK && window.joliboxsdk) {
       this.loader =
         window.joliboxsdk.loader ?? new window.JoliboxSDKLoader(loaderConfig);

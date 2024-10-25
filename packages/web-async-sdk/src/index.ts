@@ -12,6 +12,10 @@ declare global {
   }
   interface Window {
     joliboxsdk: JoliboxSDK;
+    joliboxenv?: {
+      testMode: boolean;
+      apiBaseURL: string;
+    };
   }
 }
 

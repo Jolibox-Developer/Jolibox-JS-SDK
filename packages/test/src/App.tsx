@@ -4,7 +4,6 @@ import { version } from "../package.json";
 
 const jolibox = new JoliboxSDK({
   loaderConfig: {
-    testMode: true,
     loaderMetadata: {
       version,
       asyncScriptUrl: `https://cdn.jsdelivr.net/npm/@jolibox/web-async-sdk@${version}/dist/index.iife.js`,
@@ -14,7 +13,7 @@ const jolibox = new JoliboxSDK({
 });
 
 const { ads } = jolibox;
-ads.init({ testMode: true, gameId: "G31841342933817143317925877328" });
+ads.init({ gameId: "G31841342933817143317925877328" });
 
 export const App = () => {
   useEffect(() => {
