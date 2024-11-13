@@ -6,6 +6,8 @@ Jolibox SDK is a JavaScript library that provides a simple way to integrate with
 
 ## Installation
 
+We recommend using the SDK via CDN so that you can automatically get updates in future SDK versions.
+
 ### Via CDN
 
 If you want to use the library via CDN, you add the following script tag to your HTML file.

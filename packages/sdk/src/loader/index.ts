@@ -43,9 +43,11 @@ export class JoliboxSDKLoader {
 
   private get defaultMetadata(): IVersionMetadata {
     const version = this.currentVersion;
+    const majorVersion = major(version);
     return {
       version,
-      asyncScriptUrl: `https://cdn.jsdelivr.net/npm/@jolibox/web-async-sdk@${version}/dist/index.iife.js`,
+      syncScriptUrl: `https://cdn.jsdelivr.net/npm/@jolibox/web-sync-sdk@${majorVersion}/dist/index.iife.js`,
+      asyncScriptUrl: `https://cdn.jsdelivr.net/npm/@jolibox/web-async-sdk@${majorVersion}/dist/index.iife.js`,
     };
   }
 
@@ -88,6 +90,7 @@ export class JoliboxSDKLoader {
       const script = document.createElement("script");
       script.type = "text/javascript";
       script.innerHTML = xhr.responseText;
+      console.log(script.innerHTML)
       document.head.appendChild(script);
     }
 
