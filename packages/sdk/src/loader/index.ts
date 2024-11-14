@@ -90,7 +90,6 @@ export class JoliboxSDKLoader {
       const script = document.createElement("script");
       script.type = "text/javascript";
       script.innerHTML = xhr.responseText;
-      console.log(script.innerHTML)
       document.head.appendChild(script);
     }
 

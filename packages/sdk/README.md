@@ -6,6 +6,8 @@ Jolibox SDK is a JavaScript library that provides a simple way to integrate with
 
 ## Installation
 
+We recommend using the SDK via CDN so that you can automatically get updates in future SDK versions.
+
 ### Via CDN
 
 If you want to use the library via CDN, you add the following script tag to your HTML file.
@@ -57,7 +59,7 @@ In such case, you should not include the script tag in your HTML file but write 
   // somewhere when you need to preload ads (e.g. in the game loading screen)
   ads.adConfig({
     preloadAdBreaks: "on",
-    sound: "on",
+    sound: "off",
     onReady: () => {
       console.log("onReady");
     },

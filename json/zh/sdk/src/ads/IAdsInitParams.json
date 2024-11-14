@@ -1,18 +1,6 @@
 {
     "IAdsInitParams": {
         "properties": {
-            "testMode": {
-                "comment": {
-                    "blockTags": [],
-                    "modifierTags": {},
-                    "summary": [
-                        {
-                            "kind": "text",
-                            "text": "（可选）启用 \"data-adbreak-test\" 属性，默认值为 false"
-                        }
-                    ]
-                }
-            },
             "gameId": {
                 "comment": {
                     "blockTags": [],

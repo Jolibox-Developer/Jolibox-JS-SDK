@@ -1,10 +1,10 @@
-# Jolibox Ads SDK
+# Jolibox SDK
 
 Jolibox SDK 是一个 JavaScript 库，提供了一种简单的方法来集成 Jolibox 广告、运行时和其他服务。
 
-**当前版本仍处于预发布阶段，因此 API 可能会在未来发生变化。**
-
 ## 安装
+
+我们推荐使用CDN引入SDK，这样可以在未来的SDK版本中自动获得更新。
 
 ### 通过 CDN 引入
 
@@ -57,7 +57,7 @@ Jolibox SDK 是一个 JavaScript 库，提供了一种简单的方法来集成 J
   // 在需要预加载广告的地方（例如在游戏加载屏幕中）
   ads.adConfig({
     preloadAdBreaks: "on",
-    sound: "on",
+    sound: "off",
     onReady: () => {
       console.log("onReady");
     },
