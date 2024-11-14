@@ -44,7 +44,7 @@ test("create and destroy JoliboxAnalyticsImpl", async () => {
 });
 
 test("JoliboxAnalyticsImpl has interval", async () => {
-  const analytics = new JoliboxAnalyticsImpl({ interval: 100 });
+  const analytics = new JoliboxAnalyticsImpl({ appEvent: { interval: 100 } });
   await new Promise((resolve) => setTimeout(resolve, 1001));
 
   expect(fetchMocker.requests().length).toEqual(10);

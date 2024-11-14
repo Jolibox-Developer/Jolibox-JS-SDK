@@ -4,7 +4,9 @@ import { getGameSessionId } from "../utils/session";
 type EventType = "OPEN_GAME" | "PLAY_GAME" | "CLOSE_GAME";
 
 interface IAnalyticsInitParams {
-  interval: number;
+  appEvent?: {
+    interval?: number;
+  };
 }
 
 /**
@@ -17,14 +19,14 @@ export class JoliboxAnalyticsImpl {
   interval: number;
 
   constructor(config?: IAnalyticsInitParams) {
-    const timeout = config?.interval ?? 10000;
+    const timeout = config?.appEvent?.interval ?? 10000;
     this.postAppEvent("OPEN_GAME");
     this.interval = setInterval(() => {
       this.postAppEvent("PLAY_GAME");
     }, timeout);
   }
 
-  destroy() {
+  public destroy() {
     clearInterval(this.interval);
     this.postAppEvent("CLOSE_GAME");
   }

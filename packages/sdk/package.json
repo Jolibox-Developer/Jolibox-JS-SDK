@@ -1,6 +1,6 @@
 {
   "name": "@jolibox/sdk",
-  "version": "1.0.4-beta.0",
+  "version": "1.0.4-beta.1",
   "description": "Jolibox JavaScript SDK for Ads",
   "homepage": "https://sdk-docs.jolibox.com",
   "repository": {
@@ -17,7 +17,7 @@
     "typedoc": "typedoc",
     "typedoc:i18n": "typedoc --plugin typedoc-plugin-localization --generate-json ../../json/en",
     "test": "vitest",
-    "prepublish": "pnpm run build"
+    "prepublish": "pnpm test && pnpm run build"
   },
   "keywords": [
     "jolibox",
