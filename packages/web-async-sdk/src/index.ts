@@ -1,5 +1,7 @@
 export * from "./ads";
+export * from "./analytics";
 import { JoliboxAdsImpl } from "./ads";
+import { JoliboxAnalyticsImpl } from "./analytics";
 
 interface ICommandPipe {
   cmd: string;
@@ -11,6 +13,7 @@ declare global {
     _commandPipe: Array<ICommandPipe> | JoliboxSDKPipeExecutor;
   }
   interface Window {
+    __JOLIBOX_LOCAL_SDK_VERSION__: string;
     joliboxsdk: JoliboxSDK;
     joliboxenv?: {
       testMode: boolean;
@@ -21,6 +24,7 @@ declare global {
 
 class JoliboxSDKPipeExecutor {
   ads = new JoliboxAdsImpl();
+  analytics = new JoliboxAnalyticsImpl();
 
   constructor() {
     const existingPipe = Array.from(

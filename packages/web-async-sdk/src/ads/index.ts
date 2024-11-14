@@ -1,3 +1,5 @@
+import { httpClient } from "../http";
+
 declare global {
   interface Window {
     adsbygoogle: Array<unknown>;
@@ -283,6 +285,11 @@ export class JoliboxAdsImpl {
     return urlParams.get("gameId") ?? this.config.gameId;
   };
 
+  private getMarketingSource = () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get("marketingSource") ?? "";
+  };
+
   private asyncLoad = async () => {
     let clientId = "ca-pub-7171363994453626";
     let channelId: string | undefined;
@@ -292,12 +299,18 @@ export class JoliboxAdsImpl {
       window.btoa(this.getGameId() ?? "")
     );
     try {
-      const clientInfoResp = await fetch(
-        `${
-          window.joliboxenv?.apiBaseURL ?? "https://api.jolibox.com"
-        }/public/ads?objectId=${objectId}`
+      const clientInfo = await httpClient.get<IJoliboxAdsResponse>(
+        "/public/ads",
+        {
+          query: { objectId, marketingSource: this.getMarketingSource() },
+        }
       );
-      const clientInfo: IJoliboxAdsResponse = await clientInfoResp.json();
+      // const clientInfoResp = await fetch(
+      //   `${
+      //     window.joliboxenv?.apiBaseURL ?? "https://api.jolibox.com"
+      //   }/public/ads?objectId=${objectId}`
+      // );
+      // const clientInfo: IJoliboxAdsResponse = await clientInfoResp.json();
       clientId = clientInfo.data.clientId;
       channelId = clientInfo.data.channelId;
       unitId = clientInfo.data.unitId;
