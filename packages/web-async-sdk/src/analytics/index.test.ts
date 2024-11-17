@@ -17,7 +17,7 @@ const splitRequests = (fetchMocker: FetchMock) => {
     ({ url }) => url === "https://api.jolibox.com/api/base/app-event"
   );
   const trackEventRequests = requests.filter(
-    ({ url }) => url === "https://stg-collect.jolibox.com/report"
+    ({ url }) => url === "https://collect.jolibox.com/report"
   );
   return { appEventRequests, trackEventRequests };
 };
