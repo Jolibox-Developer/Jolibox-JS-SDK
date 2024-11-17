@@ -1,10 +1,23 @@
-import { xUserAgent } from "./xua";
+import { xUserAgent } from "../utils/xua";
 
-class HttpClient {
+interface IHttpClientInitParams {
+  baseUrl?: string;
+}
+
+export class HttpClient {
   private baseUrl: string;
+  private xua = xUserAgent();
 
-  constructor() {
-    this.baseUrl = window.joliboxenv?.apiBaseURL ?? "https://api.jolibox.com";
+  private getGameId = () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get("gameId") ?? null;
+  };
+
+  constructor(config?: IHttpClientInitParams) {
+    this.baseUrl =
+      config?.baseUrl ??
+      window.joliboxenv?.apiBaseURL ??
+      "https://api.jolibox.com";
   }
 
   async get<T>(
@@ -40,10 +53,16 @@ class HttpClient {
     const searchParams = new URLSearchParams(query);
     const search = searchParams.toString();
     const url = `${this.baseUrl}${path}${search ? `?${search}` : ""}`;
-    headers = Object.assign({}, headers, {
-      "x-user-agent": xUserAgent(),
-      "Content-Type": "application/json",
-    });
+    const gameId = this.getGameId();
+    headers = Object.assign(
+      {},
+      headers,
+      {
+        "x-user-agent": this.xua,
+        "Content-Type": "application/json",
+      },
+      gameId ? { "x-game-id": gameId } : {}
+    );
     const response = await fetch(url, {
       method: "POST",
       headers,
@@ -52,5 +71,3 @@ class HttpClient {
     return (await response.json()) as T;
   }
 }
-
-export const httpClient = new HttpClient();
