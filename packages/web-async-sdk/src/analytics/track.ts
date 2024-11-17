@@ -83,10 +83,9 @@ export interface IEventParams extends Partial<IEvent> {
 
 export class EventTracker {
   private httpClient = new HttpClient({
-    baseUrl:
-      window.joliboxenv?.testMode ?? false
-        ? "https://collect.jolibox.com"
-        : "https://stg-collect.jolibox.com",
+    baseUrl: !(window.joliboxenv?.testMode ?? false)
+      ? "https://collect.jolibox.com"
+      : "https://stg-collect.jolibox.com",
   });
   deviceInfo: IDevice | null = null;
   //   userId: string | null = null;
