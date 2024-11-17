@@ -1,4 +1,6 @@
-import { httpClient } from "../http";
+// import { httpClient } from "../http";
+
+import { HttpClient } from "../http";
 
 declare global {
   interface Window {
@@ -258,6 +260,7 @@ export class JoliboxAdsImpl {
   public clientId?: string;
   public channelId?: string;
   public unitId?: string;
+  private httpClient = new HttpClient();
 
   /**
    * Internal constructor, should not be called directly
@@ -299,7 +302,7 @@ export class JoliboxAdsImpl {
       window.btoa(this.getGameId() ?? "")
     );
     try {
-      const clientInfo = await httpClient.get<IJoliboxAdsResponse>(
+      const clientInfo = await this.httpClient.get<IJoliboxAdsResponse>(
         "/public/ads",
         {
           query: { objectId, marketingSource: this.getMarketingSource() },

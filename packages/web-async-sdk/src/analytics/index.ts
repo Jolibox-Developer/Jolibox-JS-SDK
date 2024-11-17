@@ -1,7 +1,14 @@
-import { httpClient } from "../http";
+import { HttpClient } from "../http";
 import { getGameSessionId } from "../utils/session";
+import { EventType } from "./event";
+import { EventTracker } from "./track";
 
-type EventType = "OPEN_GAME" | "PLAY_GAME" | "CLOSE_GAME";
+type AppEvent = "OPEN_GAME" | "PLAY_GAME" | "CLOSE_GAME";
+const mapAppEventToTrackEventName = {
+  OPEN_GAME: "OpenGame" as const,
+  PLAY_GAME: "PlayGame" as const,
+  CLOSE_GAME: "CloseGame" as const,
+};
 
 interface IAnalyticsInitParams {
   appEvent?: {
@@ -16,7 +23,9 @@ interface IAnalyticsInitParams {
  * Currently, it will only send events in background but not exposed to the public.
  */
 export class JoliboxAnalyticsImpl {
-  interval: number;
+  private interval: number;
+  private eventTracker = new EventTracker();
+  private httpClient = new HttpClient();
 
   constructor(config?: IAnalyticsInitParams) {
     const timeout = config?.appEvent?.interval ?? 10000;
@@ -41,7 +50,7 @@ export class JoliboxAnalyticsImpl {
     return urlParams.get("marketingSource") ?? "";
   };
 
-  private postAppEvent(eventType: EventType) {
+  private postAppEvent(eventType: AppEvent) {
     const gameId = this.getGameId();
     const marketingSource = this.getMarketingSource();
     const sessionId = getGameSessionId();
@@ -53,6 +62,21 @@ export class JoliboxAnalyticsImpl {
         sessionId,
       },
     };
-    return httpClient.post("/api/base/app-event", { data });
+    this.eventTracker.trackEvent({
+      name: mapAppEventToTrackEventName[eventType],
+      type: EventType.System,
+    });
+    this.httpClient.post("/api/base/app-event", { data });
+  }
+
+  public trackEvent(
+    eventName: string,
+    extra: Record<string, string | boolean | number | null> | null
+  ) {
+    this.eventTracker.trackEvent({
+      name: eventName,
+      type: EventType.UserDefined,
+      extra,
+    });
   }
 }

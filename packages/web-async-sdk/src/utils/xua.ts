@@ -13,6 +13,23 @@ export const platform = {
   isAndroid: navigator.userAgent.includes("Android"),
   isMac: navigator.userAgent.includes("Mac"),
   isFacebook: navigator.userAgent.includes("FB_IAB"),
+  isPC:
+    !navigator.userAgent.includes("iPhone") &&
+    !navigator.userAgent.includes("Android"),
+};
+
+export const getPlatform = () => {
+  if (platform.isiOS) {
+    return "iOS";
+  } else if (platform.isAndroid) {
+    return "Android";
+  } else if (platform.isMac) {
+    return "Mac";
+  } else if (platform.isFacebook) {
+    return "Facebook";
+  } else {
+    return "PC";
+  }
 };
 
 export const getAppVersion = () => {
@@ -31,7 +48,7 @@ export const getStorage = (cookieKey: string) => {
   if (!localStorage.getItem(cookieKey)) {
     localStorage.setItem(cookieKey, uuidv4());
   }
-  return localStorage.getItem(cookieKey);
+  return localStorage.getItem(cookieKey)!;
 };
 
 export const getDeviceId = () => {
@@ -52,11 +69,7 @@ export const getUtmSource = () => {
 
 export const xUserAgent = () => {
   let applicationName = "JoliboxWebSDK";
-  const thePlatform = platform.isAndroid
-    ? "Android"
-    : platform.isiOS
-    ? "iOS"
-    : "PC";
+  const thePlatform = getPlatform();
   const locale = navigator.language;
   const deviceId = getDeviceId();
   const adid = getAdvertisingId();
