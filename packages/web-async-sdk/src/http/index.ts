@@ -38,7 +38,7 @@ export class HttpClient {
     return (await response.json()) as T;
   }
 
-  async post<T>(
+  async post<T = any>(
     path: string,
     {
       data,
@@ -68,6 +68,39 @@ export class HttpClient {
       headers,
       body: JSON.stringify(data),
     });
-    return (await response.json()) as T;
+    const responseContentType = response.headers.get("content-type");
+
+    // return blob
+    if (responseContentType?.includes("application/octet-stream")) {
+      try {
+        return response.blob() as T;
+      } catch (e) {
+        return (await response.arrayBuffer()) as T;
+      }
+    }
+
+    // return form data
+    if (
+      responseContentType?.includes("multipart/form-data") ||
+      responseContentType?.includes("application/x-www-form-urlencoded")
+    ) {
+      try {
+        return response.formData() as T;
+      } catch (e) {
+        return (await response.text()) as T;
+      }
+    }
+
+    // return json
+    if (responseContentType?.includes("application/json")) {
+      try {
+        return (await response.json()) as T;
+      } catch (e) {
+        return (await response.text()) as T;
+      }
+    }
+
+    // return text
+    return response as unknown as T;
   }
 }
