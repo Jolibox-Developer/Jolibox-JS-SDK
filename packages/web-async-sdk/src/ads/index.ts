@@ -417,6 +417,23 @@ export class JoliboxAdsImpl {
    */
   public adBreak = (params: IAdBreakParams) => {
     const type = params.type;
+
+    /* hook adBreakDone to track adBreakDone event -- start */
+    const inputAdBreakDown = params.adBreakDone;
+    const adBreakDone = (placementInfo: IPlacementInfo) => {
+      this.analytics.trackSystemEvent("CallAdBreakDone", {
+        breakType: placementInfo.breakType,
+        breakName: placementInfo.breakName,
+        breakFormat: placementInfo.breakFormat,
+        breakStatus: placementInfo.breakStatus,
+      });
+      if (inputAdBreakDown) {
+        inputAdBreakDown(placementInfo);
+      }
+    };
+    params.adBreakDone = adBreakDone;
+    /* hook adBreakDone to track adBreakDone event -- end */
+
     let paramsToTrack;
     switch (type) {
       case "preroll":
