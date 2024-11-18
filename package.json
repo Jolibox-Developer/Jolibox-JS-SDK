@@ -1,6 +1,6 @@
 {
   "name": "@jolibox/jolibox-js-sdk",
-  "version": "1.0.4-beta.4",
+  "version": "1.0.4-beta.5",
   "description": "Jolibox JavaScript SDK",
   "homepage": "https://sdk-docs.jolibox.com",
   "repository": {
@@ -32,6 +32,7 @@
   "author": "Jolibox",
   "license": "MIT",
   "devDependencies": {
+    "@types/node": "^22.9.0",
     "happy-dom": "^15.11.6",
     "serve": "^14.2.3",
     "tsup": "^8.3.0",

@@ -1,5 +1,6 @@
 // import { httpClient } from "../http";
 
+import type { JoliboxSDKPipeExecutor } from "..";
 import { HttpClient } from "../http";
 
 declare global {
@@ -261,11 +262,18 @@ export class JoliboxAdsImpl {
   public channelId?: string;
   public unitId?: string;
   private httpClient = new HttpClient();
+  private context: JoliboxSDKPipeExecutor;
 
   /**
    * Internal constructor, should not be called directly
    */
-  constructor() {}
+  constructor(context: JoliboxSDKPipeExecutor) {
+    this.context = context;
+  }
+
+  private get analytics() {
+    return this.context.analytics;
+  }
 
   /**
    * Initialize the Ads SDK
@@ -273,6 +281,7 @@ export class JoliboxAdsImpl {
    * @returns
    */
   public init(config?: IAdsInitParams) {
+    this.analytics.trackSystemEvent("CallAdsInit", null);
     if (typeof window === "undefined") {
       // skip if not in browser
       return;
@@ -353,6 +362,7 @@ export class JoliboxAdsImpl {
         script.setAttribute("data-ad-channel", this.channelId);
       }
       document.head.appendChild(script);
+      this.analytics.trackSystemEvent("LoadAdsenseCompleted", null);
     }
   };
 
@@ -369,6 +379,8 @@ export class JoliboxAdsImpl {
    * @param params
    */
   public adConfig = (params: IAdConfigParams) => {
+    const { onReady, ...paramsToTrack } = params;
+    this.analytics.trackSystemEvent("CallAdConfig", paramsToTrack);
     if (!this.configured) {
       this.configured = true;
       this.push(params);
@@ -404,6 +416,21 @@ export class JoliboxAdsImpl {
    * @param params
    */
   public adBreak = (params: IAdBreakParams) => {
+    const type = params.type;
+    let paramsToTrack;
+    switch (type) {
+      case "preroll":
+        paramsToTrack = { type };
+        break;
+      case "start":
+      case "pause":
+      case "next":
+      case "browse":
+      case "reward":
+        paramsToTrack = { type, name: params.name ?? "" };
+        break;
+    }
+    this.analytics.trackSystemEvent("CallAdBreak", paramsToTrack);
     this.push(params);
   };
 
@@ -420,6 +447,10 @@ export class JoliboxAdsImpl {
    * @returns
    */
   public adUnit = async (params: IAdUnitParams) => {
+    this.analytics.trackSystemEvent("CallAdUnit", {
+      adFormat: params.adFormat?.toString() ?? null,
+      fullWidthResponsive: params.fullWidthResponsive ?? null,
+    });
     if (!this.clientId) {
       await this.asyncLoad();
     }

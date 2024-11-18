@@ -1,6 +1,6 @@
 {
   "name": "@jolibox/web-sync-sdk",
-  "version": "1.0.4-beta.4",
+  "version": "1.0.4-beta.5",
   "description": "",
   "main": "dist/index.cjs",
   "type": "module",

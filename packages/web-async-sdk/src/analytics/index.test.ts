@@ -14,10 +14,10 @@ const parseBody = async (request: Request) => {
 const splitRequests = (fetchMocker: FetchMock) => {
   const requests = fetchMocker.requests();
   const appEventRequests = requests.filter(
-    ({ url }) => url === "https://api.jolibox.com/api/base/app-event"
+    ({ url }) => url === "https://test-api.jolibox.com/api/base/app-event"
   );
   const trackEventRequests = requests.filter(
-    ({ url }) => url === "https://collect.jolibox.com/report"
+    ({ url }) => url === "https://stg-collect.jolibox.com/report"
   );
   return { appEventRequests, trackEventRequests };
 };
@@ -47,7 +47,7 @@ test("create and destroy JoliboxAnalyticsImpl", async () => {
 
   expect(fetchMocker.requests().length).toEqual(2);
   expect(appEventRequest.url).toEqual(
-    "https://api.jolibox.com/api/base/app-event"
+    "https://test-api.jolibox.com/api/base/app-event"
   );
   expect(appEventRequest.method).toEqual("POST");
   expect(payload.eventType).toEqual("OPEN_GAME");
@@ -61,7 +61,9 @@ test("create and destroy JoliboxAnalyticsImpl", async () => {
 });
 
 test("JoliboxAnalyticsImpl has interval", async () => {
-  const analytics = new JoliboxAnalyticsImpl({ appEvent: { interval: 100 } });
+  const analytics = new JoliboxAnalyticsImpl(undefined, {
+    appEvent: { interval: 100 },
+  });
   await new Promise((resolve) => setTimeout(resolve, 1000));
 
   expect(fetchMocker.requests().length).toEqual(20);

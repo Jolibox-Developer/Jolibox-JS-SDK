@@ -52,6 +52,7 @@ export enum EventName {
   OpenGame = "OpenGame",
   PlayGame = "PlayGame",
   CloseGame = "CloseGame",
+  ErrorTrace = "ErrorTrace",
 }
 
 export interface IEvent {

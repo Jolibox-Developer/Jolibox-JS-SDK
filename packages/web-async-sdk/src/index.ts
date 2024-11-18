@@ -22,9 +22,9 @@ declare global {
   }
 }
 
-class JoliboxSDKPipeExecutor {
-  ads = new JoliboxAdsImpl();
-  analytics = new JoliboxAnalyticsImpl();
+export class JoliboxSDKPipeExecutor {
+  ads = new JoliboxAdsImpl(this);
+  analytics = new JoliboxAnalyticsImpl(this);
 
   constructor() {
     const existingPipe = Array.from(
@@ -58,4 +58,4 @@ class JoliboxSDKPipeExecutor {
   };
 }
 
-new JoliboxSDKPipeExecutor();
+export const executor = new JoliboxSDKPipeExecutor();

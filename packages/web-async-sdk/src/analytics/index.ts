@@ -1,3 +1,4 @@
+import { JoliboxSDKPipeExecutor } from "..";
 import { HttpClient } from "../http";
 import { getGameSessionId } from "../utils/session";
 import { EventType } from "./event";
@@ -26,17 +27,19 @@ export class JoliboxAnalyticsImpl {
   private interval: number;
   private eventTracker = new EventTracker();
   private httpClient = new HttpClient();
+  private context?: JoliboxSDKPipeExecutor;
 
-  constructor(config?: IAnalyticsInitParams) {
+  constructor(context?: JoliboxSDKPipeExecutor, config?: IAnalyticsInitParams) {
+    this.context = context;
     const timeout = config?.appEvent?.interval ?? 10000;
     this.postAppEvent("OPEN_GAME");
-    this.interval = setInterval(() => {
+    this.interval = window.setInterval(() => {
       this.postAppEvent("PLAY_GAME");
     }, timeout);
   }
 
   public destroy() {
-    clearInterval(this.interval);
+    window.clearInterval(this.interval);
     this.postAppEvent("CLOSE_GAME");
   }
 
@@ -69,9 +72,36 @@ export class JoliboxAnalyticsImpl {
     this.httpClient.post("/api/base/app-event", { data });
   }
 
+  public traceError(
+    error: Error,
+    extra?: Record<string, string | boolean | number | null> | null
+  ) {
+    this.eventTracker.trackEvent({
+      name: "ErrorTrace",
+      type: EventType.ErrorTrace,
+      extra: {
+        errorName: error.name,
+        errorMessage: error.message,
+        errorStack: error.stack ?? "",
+        ...extra,
+      },
+    });
+  }
+
+  public trackSystemEvent(
+    eventName: string,
+    extra?: Record<string, string | boolean | number | null> | null
+  ) {
+    this.eventTracker.trackEvent({
+      name: eventName,
+      type: EventType.System,
+      extra,
+    });
+  }
+
   public trackEvent(
     eventName: string,
-    extra: Record<string, string | boolean | number | null> | null
+    extra?: Record<string, string | boolean | number | null> | null
   ) {
     this.eventTracker.trackEvent({
       name: eventName,

@@ -1,6 +1,6 @@
 import { beforeEach, test, vi, expect } from "vitest";
-import JoliboxAdsImpl from ".";
 import createFetchMock from "vitest-fetch-mock";
+import { executor } from "..";
 
 const fetchMocker = createFetchMock(vi);
 fetchMocker.enableMocks();
@@ -12,7 +12,7 @@ beforeEach(() => {
     search: "?gameId=G31903729079412278950430008822&marketingSource=google",
   });
 
-  fetchMocker.mockIf(/^https:\/\/api.jolibox.com\/public\/ads/, {
+  fetchMocker.mockIf(/^https:\/\/test-api.jolibox.com\/public\/ads/, {
     headers: {
       "Content-Type": "application/json",
     },
@@ -28,24 +28,23 @@ beforeEach(() => {
 });
 
 test("ads", async () => {
-  if (!window.joliboxenv) {
-    window.joliboxenv = {
-      apiBaseURL: "https://api.jolibox.com",
-      testMode: true,
-    };
-  }
-  const ads = new JoliboxAdsImpl();
+  const ads = executor.ads;
   ads.init();
 
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+  await new Promise((resolve) => setTimeout(resolve, 500));
 
-  expect(fetchMocker.requests().length).toEqual(1);
-  const request = fetchMocker.requests()[0];
+  const adsRequest = fetchMocker
+    .requests()
+    .find(({ url }) =>
+      url.includes("https://test-api.jolibox.com/public/ads")
+    )!;
+
+  expect(adsRequest).toBeDefined();
   const objectId = window.encodeURIComponent(
     window.btoa("G31903729079412278950430008822")
   );
-  expect(request.url).toEqual(
-    `https://api.jolibox.com/public/ads?objectId=${objectId}&marketingSource=google`
+  expect(adsRequest.url).toEqual(
+    `https://test-api.jolibox.com/public/ads?objectId=${objectId}&marketingSource=google`
   );
 
   const script = document.head.querySelector("#google-adsense");
