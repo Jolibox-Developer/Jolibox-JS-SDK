@@ -69,7 +69,11 @@ export class JoliboxAnalyticsImpl {
       name: mapAppEventToTrackEventName[eventType],
       type: EventType.System,
     });
-    this.httpClient.post("/api/base/app-event", { data });
+
+    // TODO: remove testMode only on the next release
+    if (window.joliboxenv?.testMode) {
+      this.httpClient.post("/api/base/app-event", { data });
+    }
   }
 
   public traceError(
