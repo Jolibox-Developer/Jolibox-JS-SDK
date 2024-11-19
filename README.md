@@ -49,9 +49,17 @@ In such case, you should not include the script tag in your HTML file but write 
   // import { JoliboxSDK } from "@jolibox/sdk";
 
   const jolibox = new JoliboxSDK();
+  const { ads, runtime } = jolibox;
 
-  // For example, if you want to use the Ads service
-  const { ads } = jolibox;
+  // When your game is loading, call notifyLoadProgress to notify the loading progress
+  runtime.notifyLoadProgress(30);
+  runtime.notifyLoadProgress(60);
+  runtime.notifyLoadProgress(90);
+
+  // When your game is loaded, call loadFinished to notify the loading is finished
+  runtime.loadFinished();
+
+  // Initialize ads
   ads.init();
 
   // somewhere when you need to preload ads (e.g. in the game loading screen)
