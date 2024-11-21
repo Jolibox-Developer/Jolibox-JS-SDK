@@ -58,38 +58,26 @@ export class JoliboxAnalyticsImpl {
 
   private trackPerformance = () => {
     onFCP((metric) => {
-      this.eventTracker.trackEvent({
-        name: "GameFCP",
-        type: EventType.System,
-        extra: {
-          value: metric.value,
-          rating: metric.rating,
-          navigationType: metric.navigationType,
-        },
+      this.trackSystemEvent("GameFCP", {
+        value: metric.value,
+        rating: metric.rating,
+        navigationType: metric.navigationType,
       });
     });
 
     onLCP((metric) => {
-      this.eventTracker.trackEvent({
-        name: "GameLCP",
-        type: EventType.System,
-        extra: {
-          value: metric.value,
-          rating: metric.rating,
-          navigationType: metric.navigationType,
-        },
+      this.trackSystemEvent("GameLCP", {
+        value: metric.value,
+        rating: metric.rating,
+        navigationType: metric.navigationType,
       });
     });
 
     onTTFB((metric) => {
-      this.eventTracker.trackEvent({
-        name: "GameTTFB",
-        type: EventType.System,
-        extra: {
-          value: metric.value,
-          rating: metric.rating,
-          navigationType: metric.navigationType,
-        },
+      this.trackSystemEvent("GameTTFB", {
+        value: metric.value,
+        rating: metric.rating,
+        navigationType: metric.navigationType,
       });
     });
   };
