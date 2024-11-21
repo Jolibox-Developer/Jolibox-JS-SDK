@@ -4,9 +4,18 @@ declare global {
   }
 }
 
+/**
+ * Jolibox Analytics SDK
+ */
 export class JoliboxAnalytics {
   constructor() {}
 
+  /**
+   * Track an event, will be sent to the analytics server
+   *
+   * @param eventName event name, must be a string
+   * @param extra (OPTIONAL) extra data, must be an object or null or undefined, must not have nested objects
+   */
   public trackEvent = (
     eventName: string,
     extra?: Record<string, string | boolean | number | null> | null
