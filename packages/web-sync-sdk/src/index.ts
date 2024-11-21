@@ -1,5 +1,14 @@
+interface ICommandPipe {
+  cmd: string;
+  params: any;
+}
+
 declare global {
+  interface IJoliboxSDK {
+    _commandPipe: ICommandPipe[];
+  }
   interface Window {
+    joliboxsdk: IJoliboxSDK;
     JoliboxRuntime: typeof JoliboxRuntime;
     JoliboxRuntimeEvents: typeof JoliboxRuntimeEvents;
   }
@@ -35,6 +44,10 @@ export class JoliboxRuntime {
   loadFinished = () => {
     const loadFinishedEvent = new Event(JoliboxRuntimeEvents.LOAD_FINISHED);
     window.dispatchEvent(loadFinishedEvent);
+    window.joliboxsdk._commandPipe.push({
+      cmd: "analytics.trackSystemEvent",
+      params: ["CallRuntimeLoadFinished"],
+    });
   };
 
   /**

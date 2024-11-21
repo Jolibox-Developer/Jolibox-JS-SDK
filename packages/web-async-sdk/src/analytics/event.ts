@@ -49,10 +49,16 @@ export enum EventType {
 export enum EventName {
   Route = "Route",
   Other = "Other",
+  
   OpenGame = "OpenGame",
   PlayGame = "PlayGame",
   CloseGame = "CloseGame",
+  
   ErrorTrace = "ErrorTrace",
+
+  GameFCP = "GameFCP",
+  GameLCP = "GameLCP",
+  GameTTFB = "GameTTFB",
 }
 
 export interface IEvent {

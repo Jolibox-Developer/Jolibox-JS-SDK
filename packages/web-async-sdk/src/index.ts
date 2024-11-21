@@ -54,6 +54,15 @@ export class JoliboxSDKPipeExecutor {
         this.ads.adUnit(command.params);
         break;
       }
+
+      case "analytics.trackEvent": {
+        this.analytics.trackEvent(command.params[0], command.params[1]);
+        break;
+      }
+      case "analytics.trackSystemEvent": {
+        this.analytics.trackSystemEvent(command.params[0], command.params[1]);
+        break;
+      }
     }
   };
 }

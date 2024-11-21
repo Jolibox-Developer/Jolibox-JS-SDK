@@ -1,18 +1,23 @@
 import "./loader";
 import "./ads";
+import "./analytics";
 import "@jolibox/web-sync-sdk";
 import type { JoliboxSDKLoader, IJoliboxSDKLoaderConfig } from "./loader";
 import type { JoliboxAds } from "./ads";
+import type { JoliboxAnalytics } from "./analytics";
 import type { JoliboxRuntime } from "./runtime";
 
 declare global {
+  interface IJoliboxSDK extends JoliboxSDK {
+    _commandPipe: ICommandPipe[];
+  }
   interface Window {
     __JOLIBOX_LOCAL_SDK_VERSION__: string;
     joliboxenv?: {
       testMode: boolean;
       apiBaseURL: string;
     };
-    joliboxsdk: JoliboxSDK & { _commandPipe: ICommandPipe[] };
+    joliboxsdk: IJoliboxSDK;
     JoliboxSDK: typeof JoliboxSDK;
   }
   interface ImportMeta {
@@ -39,6 +44,7 @@ interface ICommandPipe {
 class JoliboxSDK {
   private loader: JoliboxSDKLoader;
   ads: JoliboxAds;
+  anaytics: JoliboxAnalytics;
   runtime: JoliboxRuntime;
 
   setJoliboxEnv = (inputTestMode?: boolean, inputApiBaseURL?: string) => {
@@ -77,16 +83,21 @@ class JoliboxSDK {
       this.loader =
         window.joliboxsdk.loader ?? new window.JoliboxSDKLoader(loaderConfig);
       this.ads = window.joliboxsdk.ads ?? new window.JoliboxAds();
+      this.anaytics =
+        window.joliboxsdk.anaytics ?? new window.JoliboxAnalytics();
       this.runtime = window.joliboxsdk.runtime ?? new window.JoliboxRuntime();
     } else {
+      if (!window.joliboxsdk) {
+        window.joliboxsdk = {
+          _commandPipe: [], // This is to avoid the error "Cannot read property 'push' of undefined" if any command is called before the SDK is initialized
+        } as any;
+      }
+
       this.loader = new window.JoliboxSDKLoader(loaderConfig);
       this.ads = new window.JoliboxAds();
+      this.anaytics = new window.JoliboxAnalytics();
       this.runtime = new window.JoliboxRuntime();
-      window.joliboxsdk = Object.assign(
-        this,
-        { _commandPipe: [] },
-        window.joliboxsdk
-      );
+      window.joliboxsdk = Object.assign(this, window.joliboxsdk);
     }
     if (!window.joliboxsdk._commandPipe) {
       window.joliboxsdk._commandPipe = [];

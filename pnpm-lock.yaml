@@ -73,7 +73,11 @@ importers:
         specifier: ^5.4.7
         version: 5.4.8(@types/node@22.9.0)
 
-  packages/web-async-sdk: {}
+  packages/web-async-sdk:
+    devDependencies:
+      web-vitals:
+        specifier: ^4.2.4
+        version: 4.2.4
 
   packages/web-sync-sdk: {}
 
@@ -1650,6 +1654,9 @@ packages:
       jsdom:
         optional: true
 
+  web-vitals@4.2.4:
+    resolution: {integrity: sha512-r4DIlprAGwJ7YM11VZp4R884m0Vmgr6EAKe3P+kO0PPj3Unqyvv59rczf6UiGcb9Z8QxZVcqKNwv/g0WNdWwsw==}
+
   webidl-conversions@4.0.2:
     resolution: {integrity: sha512-YQ+BmxuTgd6UXZW3+ICGfyqRyHXVlD5GtQr5+qjiNW7bF0cqrzX500HVXPBOvgXb5YnzDd+h0zqyv61KUD7+Sg==}
 
@@ -3184,6 +3191,8 @@ snapshots:
       - sugarss
       - supports-color
       - terser
+
+  web-vitals@4.2.4: {}
 
   webidl-conversions@4.0.2: {}
 
