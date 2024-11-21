@@ -84,15 +84,17 @@ class JoliboxSDK {
         window.joliboxsdk.anaytics ?? new window.JoliboxAnalytics();
       this.runtime = window.joliboxsdk.runtime ?? new window.JoliboxRuntime();
     } else {
+      if (!window.joliboxsdk) {
+        window.joliboxsdk = {
+          _commandPipe: [], // This is to avoid the error "Cannot read property 'push' of undefined" if any command is called before the SDK is initialized
+        } as any;
+      }
+
       this.loader = new window.JoliboxSDKLoader(loaderConfig);
       this.ads = new window.JoliboxAds();
       this.anaytics = new window.JoliboxAnalytics();
       this.runtime = new window.JoliboxRuntime();
-      window.joliboxsdk = Object.assign(
-        this,
-        { _commandPipe: [] },
-        window.joliboxsdk
-      );
+      window.joliboxsdk = Object.assign(this, window.joliboxsdk);
     }
     if (!window.joliboxsdk._commandPipe) {
       window.joliboxsdk._commandPipe = [];
