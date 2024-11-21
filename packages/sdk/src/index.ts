@@ -8,13 +8,16 @@ import type { JoliboxAnalytics } from "./analytics";
 import type { JoliboxRuntime } from "./runtime";
 
 declare global {
+  interface IJoliboxSDK extends JoliboxSDK {
+    _commandPipe: ICommandPipe[];
+  }
   interface Window {
     __JOLIBOX_LOCAL_SDK_VERSION__: string;
     joliboxenv?: {
       testMode: boolean;
       apiBaseURL: string;
     };
-    joliboxsdk: JoliboxSDK & { _commandPipe: ICommandPipe[] };
+    joliboxsdk: IJoliboxSDK;
     JoliboxSDK: typeof JoliboxSDK;
   }
   interface ImportMeta {

@@ -4,11 +4,11 @@ interface ICommandPipe {
 }
 
 declare global {
-  interface JoliboxSDK {
-    _commandPipe: Array<ICommandPipe>;
+  interface IJoliboxSDK {
+    _commandPipe: ICommandPipe[];
   }
   interface Window {
-    joliboxsdk: JoliboxSDK;
+    joliboxsdk: IJoliboxSDK;
     JoliboxRuntime: typeof JoliboxRuntime;
     JoliboxRuntimeEvents: typeof JoliboxRuntimeEvents;
   }
