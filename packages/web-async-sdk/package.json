@@ -1,6 +1,6 @@
 {
   "name": "@jolibox/web-async-sdk",
-  "version": "1.0.4",
+  "version": "1.0.5-beta.0",
   "description": "Jolibox JavaScript SDK for Web Async Usage",
   "homepage": "https://sdk-docs.jolibox.com",
   "repository": {
@@ -33,5 +33,8 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     }
+  },
+  "devDependencies": {
+    "web-vitals": "^4.2.4"
   }
 }

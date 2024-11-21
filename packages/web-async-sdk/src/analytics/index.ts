@@ -3,6 +3,7 @@ import { HttpClient } from "../http";
 import { getGameSessionId } from "../utils/session";
 import { EventType } from "./event";
 import { EventTracker } from "./track";
+import { onFCP, onLCP, onTTFB } from "web-vitals";
 
 type AppEvent = "OPEN_GAME" | "PLAY_GAME" | "CLOSE_GAME";
 const mapAppEventToTrackEventName = {
@@ -30,6 +31,8 @@ export class JoliboxAnalyticsImpl {
   private context?: JoliboxSDKPipeExecutor;
 
   constructor(context?: JoliboxSDKPipeExecutor, config?: IAnalyticsInitParams) {
+    this.trackPerformance();
+
     this.context = context;
     const timeout = config?.appEvent?.interval ?? 10000;
     this.postAppEvent("OPEN_GAME");
@@ -51,6 +54,44 @@ export class JoliboxAnalyticsImpl {
   private getMarketingSource = () => {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get("marketingSource") ?? "";
+  };
+
+  private trackPerformance = () => {
+    onFCP((metric) => {
+      this.eventTracker.trackEvent({
+        name: "GameFCP",
+        type: EventType.System,
+        extra: {
+          value: metric.value,
+          rating: metric.rating,
+          navigationType: metric.navigationType,
+        },
+      });
+    });
+
+    onLCP((metric) => {
+      this.eventTracker.trackEvent({
+        name: "GameLCP",
+        type: EventType.System,
+        extra: {
+          value: metric.value,
+          rating: metric.rating,
+          navigationType: metric.navigationType,
+        },
+      });
+    });
+
+    onTTFB((metric) => {
+      this.eventTracker.trackEvent({
+        name: "GameTTFB",
+        type: EventType.System,
+        extra: {
+          value: metric.value,
+          rating: metric.rating,
+          navigationType: metric.navigationType,
+        },
+      });
+    });
   };
 
   private postAppEvent(eventType: AppEvent) {

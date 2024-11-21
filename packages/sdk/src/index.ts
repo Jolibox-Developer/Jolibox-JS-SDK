@@ -1,8 +1,10 @@
 import "./loader";
 import "./ads";
+import "./analytics";
 import "@jolibox/web-sync-sdk";
 import type { JoliboxSDKLoader, IJoliboxSDKLoaderConfig } from "./loader";
 import type { JoliboxAds } from "./ads";
+import type { JoliboxAnalytics } from "./analytics";
 import type { JoliboxRuntime } from "./runtime";
 
 declare global {
@@ -39,6 +41,7 @@ interface ICommandPipe {
 class JoliboxSDK {
   private loader: JoliboxSDKLoader;
   ads: JoliboxAds;
+  anaytics: JoliboxAnalytics;
   runtime: JoliboxRuntime;
 
   setJoliboxEnv = (inputTestMode?: boolean, inputApiBaseURL?: string) => {
@@ -77,10 +80,13 @@ class JoliboxSDK {
       this.loader =
         window.joliboxsdk.loader ?? new window.JoliboxSDKLoader(loaderConfig);
       this.ads = window.joliboxsdk.ads ?? new window.JoliboxAds();
+      this.anaytics =
+        window.joliboxsdk.anaytics ?? new window.JoliboxAnalytics();
       this.runtime = window.joliboxsdk.runtime ?? new window.JoliboxRuntime();
     } else {
       this.loader = new window.JoliboxSDKLoader(loaderConfig);
       this.ads = new window.JoliboxAds();
+      this.anaytics = new window.JoliboxAnalytics();
       this.runtime = new window.JoliboxRuntime();
       window.joliboxsdk = Object.assign(
         this,
