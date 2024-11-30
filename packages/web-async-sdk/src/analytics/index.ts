@@ -1,16 +1,10 @@
 import { JoliboxSDKPipeExecutor } from "..";
-import { HttpClient } from "../http";
 import { getGameSessionId } from "../utils/session";
 import { EventType } from "./event";
 import { EventTracker } from "./track";
 import { onFCP, onLCP, onTTFB } from "web-vitals";
 
-type AppEvent = "OPEN_GAME" | "PLAY_GAME" | "CLOSE_GAME";
-const mapAppEventToTrackEventName = {
-  OPEN_GAME: "OpenGame" as const,
-  PLAY_GAME: "PlayGame" as const,
-  CLOSE_GAME: "CloseGame" as const,
-};
+type AppEvent = "OpenGame" | "PlayGame" | "CloseGame";
 
 interface IAnalyticsInitParams {
   appEvent?: {
@@ -27,7 +21,6 @@ interface IAnalyticsInitParams {
 export class JoliboxAnalyticsImpl {
   private interval: number;
   private eventTracker = new EventTracker();
-  private httpClient = new HttpClient();
   private context?: JoliboxSDKPipeExecutor;
 
   constructor(context?: JoliboxSDKPipeExecutor, config?: IAnalyticsInitParams) {
@@ -35,15 +28,15 @@ export class JoliboxAnalyticsImpl {
 
     this.context = context;
     const timeout = config?.appEvent?.interval ?? 10000;
-    this.postAppEvent("OPEN_GAME");
+    this.postAppEvent("OpenGame");
     this.interval = window.setInterval(() => {
-      this.postAppEvent("PLAY_GAME");
+      this.postAppEvent("PlayGame");
     }, timeout);
   }
 
   public destroy() {
     window.clearInterval(this.interval);
-    this.postAppEvent("CLOSE_GAME");
+    this.postAppEvent("CloseGame");
   }
 
   private getGameId = () => {
@@ -86,23 +79,15 @@ export class JoliboxAnalyticsImpl {
     const gameId = this.getGameId();
     const marketingSource = this.getMarketingSource();
     const sessionId = getGameSessionId();
-    const data = {
-      eventType,
-      gameInfo: {
+    this.eventTracker.trackEvent({
+      name: eventType,
+      type: EventType.System,
+      extra: {
         gameId,
         marketingSource,
         sessionId,
       },
-    };
-    this.eventTracker.trackEvent({
-      name: mapAppEventToTrackEventName[eventType],
-      type: EventType.System,
     });
-
-    // TODO: remove testMode only on the next release
-    if (window.joliboxenv?.testMode) {
-      this.httpClient.post("/api/base/app-event", { data });
-    }
   }
 
   public traceError(
